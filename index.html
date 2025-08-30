@@ -2,2262 +2,2290 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quiz – C1..C5 (uma por vez)</title>
-    <style>
-        :root {
-            --bg: #0b1020;
-            --card: #141a2f;
-            --ink: #f5f7ff;
-            --muted: #b9c2e0;
-            --accent: #7aa2ff;
-            --bad: #ff6b6b;
-            --good: #3ad29f;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz – C1..C5 (uma por vez)</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #141a2f;
+      --ink: #f5f7ff;
+      --muted: #b9c2e0;
+      --accent: #7aa2ff;
+      --bad: #ff6b6b;
+      --good: #3ad29f
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box
+    }
 
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
-            background: linear-gradient(180deg, #0b1020, #0f1530 35%, #101733 100%);
-            color: var(--ink);
-            min-height: 100svh;
-            display: grid;
-            place-items: center;
-            padding: 16px;
-        }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+      background: linear-gradient(180deg, #0b1020, #0f1530 35%, #101733 100%);
+      color: var(--ink);
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 16px
+    }
 
-        .app {
-            width: 100%;
-            max-width: 740px;
-            background: var(--card);
-            border: 1px solid rgba(255, 255, 255, .06);
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-        }
+    .app {
+      width: 100%;
+      max-width: 740px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35)
+    }
 
-        header {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            padding-bottom: 10px;
-            margin-bottom: 14px;
-        }
+    header {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      padding-bottom: 10px;
+      margin-bottom: 14px
+    }
 
-        .badge {
-            font-size: 12px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: rgba(122, 162, 255, .12);
-            color: var(--accent);
-        }
+    .badge {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(122, 162, 255, .12);
+      color: var(--accent)
+    }
 
-        .score {
-            font-size: 14px;
-            color: var(--muted);
-        }
+    .score {
+      font-size: 14px;
+      color: var(--muted)
+    }
 
-        .score b {
-            color: var(--ink);
-        }
+    .score b {
+      color: var(--ink)
+    }
 
-        .qmeta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin: 6px 0 0;
-        }
+    .qmeta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 6px 0 0
+    }
 
-        .qmeta .tag {
-            background: rgba(255, 255, 255, .06);
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            color: var(--muted);
-        }
+    .qmeta .tag {
+      background: rgba(255, 255, 255, .06);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted)
+    }
 
-        h1 {
-            font-size: clamp(18px, 3vw, 22px);
-            margin: 6px 0 10px;
-            letter-spacing: .2px;
-        }
+    h1 {
+      font-size: clamp(18px, 3vw, 22px);
+      margin: 6px 0 10px;
+      letter-spacing: .2px
+    }
 
-        p.legend {
-            margin: 0 0 4px;
-            color: var(--muted);
-            font-size: 12px;
-        }
+    p.legend {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 12px
+    }
 
-        .options {
-            display: grid;
-            gap: 10px;
-            margin: 12px 0 8px;
-        }
+    .qimg {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 8px 0 0;
+      display: none
+    }
 
-        .opt {
-            display: grid;
-            grid-template-columns: 22px 1fr auto;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: rgba(255, 255, 255, .04);
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: 12px;
-            transition: transform .05s ease, border-color .15s ease, background .15s ease;
-        }
+    .options {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 8px
+    }
 
-        .opt:hover {
-            transform: translateY(-1px);
-            border-color: rgba(122, 162, 255, .35);
-        }
+    .opt {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      transition: transform .05s ease, border-color .15s ease, background .15s ease
+    }
 
-        .opt input {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent);
-        }
+    .opt:hover {
+      transform: translateY(-1px);
+      border-color: rgba(122, 162, 255, .35)
+    }
 
-        .opt label {
-            cursor: pointer;
-            user-select: none;
-        }
+    .opt input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--accent)
+    }
 
-        .opt button.sel {
-            font-size: 12px;
-            padding: 6px 10px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, .16);
-            color: var(--muted);
-            border-radius: 8px;
-            cursor: pointer;
-        }
+    .opt label {
+      cursor: pointer;
+      user-select: none
+    }
 
-        .opt.correct {
-            border-color: rgba(58, 210, 159, .55);
-            background: rgba(58, 210, 159, .10);
-        }
+    .opt button.sel {
+      font-size: 12px;
+      padding: 6px 10px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .16);
+      color: var(--muted);
+      border-radius: 8px;
+      cursor: pointer
+    }
 
-        .opt.wrong {
-            border-color: rgba(255, 107, 107, .55);
-            background: rgba(255, 107, 107, .10);
-        }
+    .opt.correct {
+      border-color: rgba(58, 210, 159, .55);
+      background: rgba(58, 210, 159, .10)
+    }
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
+    .opt.wrong {
+      border-color: rgba(255, 107, 107, .55);
+      background: rgba(255, 107, 107, .10)
+    }
 
-        .btn {
-            appearance: none;
-            border: 0;
-            cursor: pointer;
-            color: #0b1020;
-            background: var(--ink);
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            transition: transform .06s ease, opacity .15s ease;
-        }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px
+    }
 
-        .btn.secondary {
-            background: transparent;
-            color: var(--ink);
-            border: 1px solid rgba(255, 255, 255, .20);
-        }
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      color: #0b1020;
+      background: var(--ink);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform .06s ease, opacity .15s ease
+    }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
+    .btn.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, .20)
+    }
 
-        .feedback {
-            margin-top: 10px;
-            font-weight: 700;
-        }
+    .btn:active {
+      transform: translateY(1px)
+    }
 
-        .good {
-            color: var(--good);
-        }
+    .feedback {
+      margin-top: 10px;
+      font-weight: 700
+    }
 
-        .bad {
-            color: var(--bad);
-        }
+    .good {
+      color: var(--good)
+    }
 
-        footer {
-            margin-top: 14px;
-            color: var(--muted);
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+    .bad {
+      color: var(--bad)
+    }
 
-        .muted {
-            color: var(--muted);
-        }
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap
+    }
 
-        @media (max-width: 480px) {
-            .opt {
-                grid-template-columns: 22px 1fr;
-            }
+    .muted {
+      color: var(--muted)
+    }
 
-            .opt button.sel {
-                display: none;
-            }
+    @media (max-width:480px) {
+      .opt {
+        grid-template-columns: 22px 1fr
+      }
 
-            .actions {
-                flex-direction: column;
-            }
+      .opt button.sel {
+        display: none
+      }
 
-            header {
-                gap: 6px;
-            }
-        }
-    </style>
+      .actions {
+        flex-direction: column
+      }
+
+      header {
+        gap: 6px
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="app" role="application" aria-live="polite">
-        <header>
-            <div class="badge" id="progress">Pergunta 1/1</div>
-            <div class="score">Acertos: <b id="hits">0</b> • Erros: <b id="misses">0</b></div>
-        </header>
+  <div class="app" role="application" aria-live="polite">
+    <header>
+      <div class="badge" id="progress">Pergunta 1/1</div>
+      <div class="score">Acertos: <b id="hits">0</b> • Erros: <b id="misses">0</b></div>
+    </header>
 
-        <div id="card">
-            <p class="legend" id="origin">Origem: —</p>
-            <h1 id="question">Carregando…</h1>
-            <div class="qmeta">
-                <span class="tag" id="qtype">Tipo: —</span>
-            </div>
-            <div class="options" id="options"></div>
-            <div class="actions">
-                <button class="btn" id="confirm">Confirmar</button>
-                <button class="btn secondary" id="next" disabled>Próxima</button>
-                <button class="btn secondary" id="restart" style="margin-left:auto;">Reiniciar</button>
-            </div>
-            <div class="feedback" id="feedback"></div>
-        </div>
-
-        <footer>
-            <span class="muted">Toque numa opção para selecionar (múltipla permite várias).</span>
-            <span class="muted">As questões aparecem em ordem aleatória.</span>
-        </footer>
+    <div id="card">
+      <p class="legend" id="origin">Origem: —</p>
+      <h1 id="question">Carregando…</h1>
+      <img id="qimage" class="qimg" alt="Imagem da questão">
+      <div class="qmeta">
+        <span class="tag" id="qtype">Tipo: —</span>
+      </div>
+      <div class="options" id="options"></div>
+      <div class="actions">
+        <button class="btn" id="confirm">Confirmar</button>
+        <button class="btn secondary" id="next" disabled>Próxima</button>
+        <button class="btn secondary" id="restart" style="margin-left:auto;">Reiniciar</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
     </div>
 
-    <script>
-        // ====== 1) JSON com as questões (edite à vontade) ======
-        // Campos: id, form, type ('single'|'multiple'), text, options[], correct[] (índices das opções corretas)
-        const quizData = [
-            {
-                "id": "C0-Q1",
-                "form": "C0",
-                "type": "single",
-                "text": "_______ pode assumir um de um conjunto finito de valores possíveis, a qualquer instante, sendo também conhecido como sinal discreto.",
-                "options": [
-                    "Um sinal digital",
-                    "Um sistema embarcado",
-                    "Um circuito digital",
-                    "Um sistema digital",
-                    "Um sinal analógico"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C0-Q2",
-                "form": "C0",
-                "type": "single",
-                "text": "_______ pode ter um valor de um conjunto infinito de valores possíveis, sendo também conhecido como sinal contínuo.",
-                "options": [
-                    "Um sinal analógico",
-                    "Um sinal digital",
-                    "Um sistema embarcado",
-                    "Um circuito digital",
-                    "Um sistema digital"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C0-Q3",
-                "form": "C0",
-                "type": "single",
-                "text": "_______ recebe entradas digitais e gera saídas digitais.",
-                "options": [
-                    "Um sinal digital",
-                    "Um sinal analógico",
-                    "Um sistema digital",
-                    "Um circuito digital",
-                    "Um sistema embarcado"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C0-Q4",
-                "form": "C0",
-                "type": "single",
-                "text": "_______ é uma conexão de componentes digitais que juntos constituem um sistema digital.",
-                "options": [
-                    "Um sinal analógico",
-                    "Um circuito digital",
-                    "Um sinal digital",
-                    "Um sistema embarcado",
-                    "Um sistema digital"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C0-Q5",
-                "form": "C0",
-                "type": "single",
-                "text": "Os circuitos digitais encontrados nas diferentes aplicações dos computadores de propósitos gerais frequentemente recebem o nome de _________, porque estão colocados dentro de um outro dispositivo eletrônico.",
-                "options": [
-                    "Um sinal analógico",
-                    "Um sinal digital",
-                    "Sistema embarcado",
-                    "Um circuito digital",
-                    "Um sistema digital"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C0-Q6",
-                "form": "C0",
-                "type": "single",
-                "text": "Mede o fenômeno físico analógico e converte o valor medido em um sinal elétrico. Um exemplo é o microfone (que mede o som), dispositivos de captura de vídeo (que medem a luz), termômetros (que medem a temperatura) e velocímetros (que medem a velocidade).",
-                "options": [
-                    "Sensor",
-                    "Microprocessador",
-                    "Atuador",
-                    "Conversor analógico-digital",
-                    "Conversor digital-analógico"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C0-Q7",
-                "form": "C0",
-                "type": "single",
-                "text": "Converte o sinal elétrico em códigos binários, amostrando (medindo) o sinal elétrico a uma taxa regular e converter cada amostra em um valor de bits.",
-                "options": [
-                    "Atuador",
-                    "Conversor analógico-digital",
-                    "Microprocessador",
-                    "Sensor",
-                    "Conversor digital-analógico"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C0-Q8",
-                "form": "C0",
-                "type": "single",
-                "text": "Converte bits de volta à forma de sinal elétrico.",
-                "options": [
-                    "Conversor digital-analógico",
-                    "Microprocessador",
-                    "Sensor",
-                    "Atuador",
-                    "Conversor analógico-digital"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C0-Q9",
-                "form": "C0",
-                "type": "single",
-                "text": "Converte esse sinal elétrico de volta à forma de fenômeno físico.",
-                "options": [
-                    "Microprocessador",
-                    "Conversor digital-analógico",
-                    "Atuador",
-                    "Conversor analógico-digital",
-                    "Sensor"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C0-Q10",
-                "form": "C0",
-                "type": "single",
-                "text": "Dispositivo digital programável que executa uma sequência de instruções especificadas pelo usuário, conhecida como programa ou software.",
-                "options": [
-                    "Conversor analógico-digital",
-                    "Sensor",
-                    "Atuador",
-                    "Conversor digital-analógico",
-                    "Microprocessador"
-                ],
-                "correct": [
-                    4
-                ]
-            },
-            {
-                "id": "C1-1-Q1",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Selecione a sequência que mostra a evolução das chaves.",
-                "options": [
-                    "Relés; Transistores discretos; Circuitos integrados; Válvulas termiônicas",
-                    "Relés; Válvulas termiônicas; Transistores discretos; Circuitos integrados",
-                    "Válvulas termiônicas; Relés; Transistores discretos; Circuitos integrados",
-                    "Relés; Transistores discretos; Válvulas termiônicas; Circuitos integrados"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C1-1-Q2",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Aplicou a álgebra booleana aos circuitos baseados em chaves dando uma base formal ao projeto de circuitos digitais.",
-                "options": [
-                    "George Boole",
-                    "Claude Shannon",
-                    "Gordon Moore",
-                    "William Shockley"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C1-1-Q3",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Enunciado matemático que representa uma função booleana, igualando uma expressão a outra.",
-                "options": [
-                    "Tabela-verdade",
-                    "Função",
-                    "Circuito",
-                    "Equação"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q4",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Interconexão de componentes que descreve uma função booleana.",
-                "options": [
-                    "Circuito",
-                    "Função",
-                    "Equação",
-                    "Tabela-verdade"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C1-1-Q5",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Forma de representar uma função booleana que lista as variáveis de entrada e mostra todas as combinações possíveis de valores para essas entradas.",
-                "options": [
-                    "Circuito",
-                    "Equação",
-                    "Tabela-verdade",
-                    "Função"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C1-1-Q6",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Termo de produto que contém todas as literais da função exatamente uma vez, seja na forma afirmada ou na complementada.",
-                "options": [
-                    "Forma canónica",
-                    "Maxtermo",
-                    "Implementação lógica de dois níveis",
-                    "Mintermo"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q7",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Termo de soma em que cada uma das variáveis aparece exatamente uma vez, seja na forma afirmada, seja na forma complementada.",
-                "options": [
-                    "Mintermo",
-                    "Implementação lógica de dois níveis",
-                    "Forma canónica",
-                    "Maxtermo"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q8",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Circuitos baseados em portas lógicas, projetados de tal forma que as entradas alimentam uma coluna de AND que por sua vez alimentam uma porta OR simples.",
-                "options": [
-                    "Forma canónica",
-                    "Implementação lógica de dois níveis",
-                    "Maxtermo",
-                    "Mintermo"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C1-1-Q9",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Selecione a alternativa que representa a forma padrão de uma equação booleana.",
-                "options": [
-                    "G(a,b,c,d,e) = abcd + a'bcde",
-                    "K(a,b,c,d,e,f) = a'bcde + abcde' + abcde",
-                    "F(a,b,d,c,e) = a'bcde + abcde' + abcde",
-                    "H(a,b,c,d,e) = abcde + abcde' + a'bcde + a'bcde(a' + c)"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C1-1-Q10",
-                "form": "C1 1",
-                "type": "single",
-                "text": "Programa de computador que realiza o processo de se fornecer valores de entradas a um circuito e executar um programa de computador que calcula a saída do circuito com e essas entradas.",
-                "options": [
-                    "Simulador",
-                    "Processador",
-                    "Linguagem de descrição de hardware",
-                    "Ferramenta de captura de esquemático"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C1-1-Q1",
-                "form": "C1",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: A realização de transformações que melhoram critérios de interesse como o tamanho do circuito ou o atraso de propagação é denominado de ______; enquanto a melhora de um critério de interesse às custas de outro é denominado de ____.",
-                "options": [
-                    "Otimização – Minimização",
-                    "Tradeoff – Otimização",
-                    "Minimização - Tradeoff",
-                    "Otimização – Tradeoff"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q2",
-                "form": "C1",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: Para os projetistas de sistemas digitais, alguns critérios gerais comumente de interesse são: o(a) _____, que é uma medida do número de transistores, ou da área de silício, de um sistema digital; o(a) ________, que é uma medida do tempo de execução de uma computação pelo sistema; e, o(a) _______, que é medida da energia consumida em um segundo por um sistema, diretamente relacionada com o calor gerado pelo sistema e a energia que é consumida das baterias pelas computações.",
-                "options": [
-                    "Desempenho – Tamanho – Potência consumida",
-                    "Potência – Desempenho – Temperatura",
-                    "Nível de integração - Desempenho – Temperatura",
-                    "Tamanho – Desempenho – Potência consumida"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q3",
-                "form": "C1",
-                "type": "single",
-                "text": "A minimização do número de transistores usados na implementação de um circuito lógico não pode ser referida como;",
-                "options": [
-                    "Otimização da lógica de dois níveis",
-                    "Minimização de lógica de dois níveis",
-                    "Otimização de tamanho de lógica de dois níveis",
-                    "Otimização de desempenho e potência"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q4",
-                "form": "C1",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: O problema da otimização da lógica de dois níveis pode ser visto _________ como sendo um problema de minimização do número de _________ de um(a) __________ o(a) qual está na forma de uma soma de produtos.",
-                "options": [
-                    "Algebricamente – Termos e literais - Equação booleana",
-                    "Algebricamente - Termos e literais - Circuito combinacional",
-                    "Graficamente – Portas lógicas – Equação booleana",
-                    "Algebricamente – Portas lógicas – Circuito combinacional"
-                ],
-                "correct": []
-            },
-            {
-                "id": "C1-1-Q5",
-                "form": "C1",
-                "type": "single",
-                "text": "Selecione a opção que não corresponde ao Mapa K;",
-                "options": [
-                    "É essencialmente uma representação gráfica de um tabela-verdade",
-                    "Constitui um método visual",
-                    "É mais uma maneira de representar uma função",
-                    "Ajuda minimizar algebricamente as equações booleanas que têm muitas variáveis"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q6",
-                "form": "C1",
-                "type": "single",
-                "text": "Selecione a opção que não corresponde à minimização usando mapa K;",
-                "options": [
-                    "Converta a função da equação para uma forma de soma de mintermos.",
-                    "Coloque um 1 na célula apropriada do mapa K para cada mintermo.",
-                    "Cubra todos os 1s desenhando um número mínimo de maiores círculos possíveis, de modo que cada 1 seja incluído ao menos uma vez, escreva o termo correspondente.",
-                    "Faça AND de todos os termos resultantes para criar a função minimizada."
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q7",
-                "form": "C1",
-                "type": "single",
-                "text": "Um algoritmo exato é um método de resolução de problemas que usualmente fornece uma boa solução, idealmente próxima da ótima, mas que não é a ótima. Uma heurística é um método de resolução de problemas que fornece a solução ótima. Do ponto de vista dos critérios de interesse, uma solução ótima é uma solução tão boa ou melhor do que qualquer outra possível.",
-                "options": [
-                    "Verdadeiro",
-                    "Falso"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C1-1-Q8",
-                "form": "C1",
-                "type": "single",
-                "text": "Com respeito a abordagem para otimização automatizada do tamanho de uma lógica de dois níveis, selecione a sequência de passos correta;",
-                "options": [
-                    "Determine os implicantes primos - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais",
-                    "Determine os implicantes - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais",
-                    "Determine os implicantes primos essencias - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos",
-                    "Determine os implicantes primos - Acrescente implicantes à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C1-1-Q9",
-                "form": "C1",
-                "type": "single",
-                "text": "Dadas as equações \"F1 = ab + acd + ace\" e \"F2 = a(b+c(d+e))\"; selecione a opção correta;",
-                "options": [
-                    "F1 utiliza menos transistores e apresenta maior atraso que F2",
-                    "F1 utiliza menos transistores e apresenta menor atraso que F2",
-                    "F1 utiliza mais transistores e apresenta maior atraso que F2",
-                    "F1 utiliza mais transistores e apresenta menor atraso que F2"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C1-1-Q10",
-                "form": "C1",
-                "type": "single",
-                "text": "Dadas as equações “F1 = (a+b)c+dfg+efg” e “F2 = (a+b)c + (d+e)fg”; selecione a opção correta;",
-                "options": [
-                    "F1 utiliza menos transistores e apresenta maior atraso que F2",
-                    "F1 utiliza mais transistores e apresenta igual atraso que F2",
-                    "F1 utiliza menos transistores e apresenta menor atraso que F2",
-                    "F1 utiliza mais transistores e apresenta menor atraso que F2"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C2-1-Q1",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: As saídas de circuito _______ dependem não somente das entradas atuais, mas também do(a) seu ______ atual (conjunto de bits armazenado no circuito) que por sua vez depende da(o) _______ passada(o) de valores que apareceram nas entradas do circuito.",
-                "options": [
-                    "Sequencial – Sequência – Memória",
-                    "Com memória – Estado – Saída",
-                    "Com memória – Saída – Entrada",
-                    "Sequencial – Estado – Sequência"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C2-1-Q2",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Método básico usado para armazenar um bit em um circuito digital.",
-                "options": [
-                    "Amplificação",
-                    "Sequenciação",
-                    "Oscilação",
-                    "Realimentação"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C2-1-Q3",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Um latch SR com portas NOR pode entrar em oscilação quando",
-                "options": [
-                    "S = 1 e R = 1",
-                    "S = 0 e R = 1",
-                    "S = 1 e R = 0",
-                    "S = 0 e R = 0"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q4",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Com respeito ao flip-flop D, selecione a alternativa incorreta;",
-                "options": [
-                    "É sensível ao nível",
-                    "É sensível à borda",
-                    "Pode ser implementado usando dois latches D",
-                    "Pode armazenar um bit"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q5",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Com respeito ao Registrador, selecione a alternativa incorreta;",
-                "options": [
-                    "As suas entradas são carregadas sequencialmente quando o relógio muda de nível",
-                    "Pode ser construído usando múltiplos flip-flops",
-                    "Um registrador de oito bits pode ser chamado de “flip-flop D de 8 bits”",
-                    "Componente sequencial que pode armazenar múltiplos bits"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q6",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: Em um circuito digital, um(a) _________ armazena bits. Bits armazenados significam que o sistema tem ________ o que também é conhecido como ________, resultando em circuitos chamados de _________.",
-                "options": [
-                    "Registrador – Memória – Estado – Combinacionais",
-                    "Registrador – Memória – Estado – Sequenciais",
-                    "Estado – Registrador – Memória – Sequenciais",
-                    "Memória – Estado – Registrador – Sequenciais"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C2-1-Q7",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Um circuito sequencial que controla saídas booleanas com base em entradas booleanas e um comportamento específico, ordenado no tempo, é referido frequentemente como sendo um:",
-                "options": [
-                    "Bloco de controle",
-                    "Máquina de estados finito (FSM)",
-                    "Registrador",
-                    "Estado"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q8",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Com respeito a uma máquina de estados finitos (FSM), selecione a sequencia que corresponda às frases a seguir; I) Aresta orientada ou dirigida que indica para qual estado deve-se ir baseado no estado atual e nos valores de entrada; II) Estado para se começar quando um sistema é energizado e que é indicado graficamente por uma aresta que não tem estado de origem; III) Representação gráfica que permitem visualizar o comportamento da FSM; IV) Atribuição dos valores de saída que devem ser gerados em cada estado",
-                "options": [
-                    "Transição - Estado inicial - Diagrama de estados - Ação",
-                    "Ação - Transição - Estado inicial - Diagrama de estados",
-                    "Transição - Diagrama de estados- Estado inicial - Ação",
-                    "Ação - Estado inicial - Transição - Diagrama de estados"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q9",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Com respeito ao \"Processo de projeto de bloco de controle\", selecione a sequência de passos correta.",
-                "options": [
-                    "Captura de FSM – Criação de arquitetura – Codificação de estados – Criação de tabela de estados – Implementação de lógica combinacional",
-                    "Criação de arquitetura – Captura de FSM – Codificação de estados – Criação de tabela de estados – Implementação de lógica combinacional",
-                    "Criação de arquitetura – Codificação de estados – Captura de FSM – Criação de tabela de estados – Implementação de lógica combinacional",
-                    "Codificação de estados – Captura de FSM – Criação de arquitetura –Criação de tabela de estados – Implementação de lógica combinacional"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-1-Q10",
-                "form": "C2 1",
-                "type": "single",
-                "text": "Com respeito a uma máquina de estados finitos (FSM), selecione a sequencia que corresponda às frases a seguir; I) Corresponde à atribuição de um número binário único a cada um dos estados num bloco de controle. II) Gera as saídas e os sinais do próximo estado da FSM a partir das entradas e os bits de estado, no contexto do bloco de controle. III) Está composta(o) por um registrador de estado e uma lógica combinacional, cujas entradas são os bits do registrador de estado e as entradas da FSM e cujas saídas são os bits do próximo estado e as saídas da FSM;",
-                "options": [
-                    "Codificação de estados - Lógica combinacional - Arquitetura",
-                    "Codificação de estados - Lógica sequencial - Arquitetura",
-                    "Codificação de estados - Arquitetura - Lógica combinacional",
-                    "Lógica combinacional - Lógica sequencial - Arquitetura"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-2-Q1",
-                "form": "C2 2",
-                "type": "single",
-                "text": "Selecione a opção que complete a frase a seguir; \"A ______ de estados, também conhecida como ________ de estados, é uma _______ que reduz o número de estados de uma FSM sem alterar o seu comportamento.\"",
-                "options": [
-                    "Redução - Minimização - Otimização",
-                    "Redução - Codificação - Otimização",
-                    "Otiização - Tradeoff - Minimização",
-                    "Minimização - Implicação - Redução"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-2-Q2",
-                "form": "C2 2",
-                "type": "multi",
-                "text": "Dois estados são equivalentes se:",
-                "options": [
-                    "Esses estados atribuem os mesmos valores às saídas.",
-                    "Para todas as sequências possíveis de entradas, as saídas da FSM serão as mesmas quando se inicia em qualquer um desses estados.",
-                    "Para todas as sequências possíveis de transições, as saídas da FSM serão as mesmas quando se inicia em qualquer um desses estados.",
-                    "Esses estados atribuem os mesmos valores às entradas."
-                ],
-                "correct": [
-                    0,
-                    1
-                ]
-            },
-            {
-                "id": "C2-2-Q3",
-                "form": "C2 2",
-                "type": "multi",
-                "text": "Na figura a seguir; <imagem1>",
-                "options": [
-                    "Os estados S0 e S2 são equivalentes.",
-                    "Os estados S1 e S3 são equivalentes.",
-                    "Os estados S0 e S2 não são equivalentes.",
-                    "Os estados S1 e S3 não são equivalentes."
-                ],
-                "correct": [
-                    0,
-                    1
-                ],
-                "image": "img/imagem1"
-            },
-            {
-                "id": "C2-2-Q4",
-                "form": "C2 2",
-                "type": "multi",
-                "text": "Na figura a seguir (errada); <imagem2>",
-                "options": [
-                    "Os estados S0 e S2 são equivalentes.",
-                    "Os estados S1 e S3 são equivalentes.",
-                    "Os estados S0 e S2 não são equivalentes.",
-                    "Os estados S1 e S3 não são equivalentes."
-                ],
-                "correct": [
-                    2,
-                    3
-                ],
-                "image": "img/imagem2"
-            },
-            {
-                "id": "C2-2-Q5",
-                "form": "C2 2",
-                "type": "multi",
-                "text": "Com respeito à redução de estados, selecione as opções corretas;",
-                "options": [
-                    "Para um dado valor de entrada, se os próximos estados dos dois estados não forem equivalentes, então os dois estados também não serão equivalentes.",
-                    "Se as saídas de dois estados não forem iguais, os dois estados não serão equivalentes;",
-                    "Para um dado valor de entrada, se os próximos estados dos dois estados forem equivalentes, então os dois estados não serão equivalentes.",
-                    "Se as saídas de dois estados não forem iguais, os dois estados podem ser equivalentes;"
-                ],
-                "correct": [
-                    0,
-                    1
-                ]
-            },
-            {
-                "id": "C2-2-Q6",
-                "form": "C2 2",
-                "type": "single",
-                "text": "A tabela de implicação da figura a seguir indica que; <imagem3>",
-                "options": [
-                    "Existem dois estados equivalentes",
-                    "Existem três estados equivalentes",
-                    "Não existem estados equivalentes",
-                    "Existem seis estados equivalentes"
-                ],
-                "correct": [
-                    2
-                ],
-                "image": "img/imagem3"
-            },
-            {
-                "id": "C2-2-Q7",
-                "form": "C2 2",
-                "type": "single",
-                "text": "Selecione a opção que não corresponde a um método de codificação de estados;",
-                "options": [
-                    "Codificações binárias alternativas com largura de bits mínima.",
-                    "Codificação usando um bit por saída.",
-                    "Codificação usando one-hot encoding.",
-                    "Codificação de saída."
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C2-2-Q8",
-                "form": "C2 2",
-                "type": "single",
-                "text": "O caso em que \"as saídas estarão ligadas por conexões diretamente aos bits do registrador de estado\" corresponde ao método de codificação de estados de",
-                "options": [
-                    "Codificação de saída",
-                    "Codificações binárias alternativas com largura de bits mínima",
-                    "Codificação usando um bit por saída",
-                    "Codificação usando one-hot encoding"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-2-Q9",
-                "form": "C2 2",
-                "type": "single",
-                "text": "Selecione a opção que completa a frase a seguir; \"Uma FSM _____ é uma FSM cujas _____ são uma função dos estados da FSM. Uma FSM ______ é uma FSM cujas ______ são uma função dos estados da FSM e das _______.\"",
-                "options": [
-                    "Moore - Saídas - Mealy - Saídas - Entradas",
-                    "Moore - Entradas- Mealy - Saídas - Saídas",
-                    "Mealy - Saídas - Moore- Saídas - Entradas",
-                    "Mealy - Entradas- Mealy - Entradas - Saídas"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C2-2-Q10",
-                "form": "C2 2",
-                "type": "single",
-                "text": "Gráficamente, as atribuições de saída de uma FSM Mealy são listadas com cada estado, e não com cada transição.",
-                "options": [
-                    "Verdadeiro",
-                    "Falso"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-1-Q1",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta;",
-                "options": [
-                    "Registradores e unidades funcionais são conhecidos como componentes de do RTL, e tais componentes compõem circuitos conhecidos como Datapaths.",
-                    "Uma entrada de dados não pode ter apenas um único bit porque não seria possível se diferenciar de uma entrada de controle.",
-                    "Uma entrada de dados tipicamente tem bits múltiplos que em conjunto representam uma entidade única.",
-                    "Uma entrada de controle tem tipicamente um bit que representa algum evento específico que está ocorrendo fora do sistema.",
-                    "É possível um sistema digital ter outro tipo de entradas além das entradas de controle e de dados."
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-1-Q2",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Selecione a sequência de passos para o processo de projeto de registradores;",
-                "options": [
-                    "Criação da tabela de funções do multiplexador - Determinação do tamanho do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle",
-                    "Determinação do tamanho do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle - Criação da tabela de funções do multiplexador",
-                    "Determinação do tamanho do multiplexador - Mapeamento das linhas de controle - Criação da tabela de funções do multiplexador - Conexão das entradas do multiplexador",
-                    "Determinação do tamanho do multiplexador - Criação da tabela de funções do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C3-1-Q3",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta;",
-                "options": [
-                    "O crescimento exponencial do número de transistores impede usar o Projeto lógico combinacional para somadores com larguras supeiores a 10.",
-                    "Implementar um somador de N bits seguindo o Projeto lógico combinacional deixa de ser prático quando N>4.",
-                    "A implementação de um somador de 16 bits seguindo o Projeto lógico combinacional resultaria em uma tabela de verdade de mais de 4 billões de linhas.",
-                    "Um somador implementado seguindo o Projeto lógico combinacional gera valores espurios."
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C3-1-Q4",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Em referência aos Deslocadores, selecione a alternativa incorreta",
-                "options": [
-                    "Não é possível implementar deslocadores usando apenas logica combinacional.",
-                    "Pode ser usado para multiplicar por 4.",
-                    "Pode ser usado para dividir por 2.",
-                    "São úteis para transmitir dados serialmente."
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-1-Q5",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Selecione a frase correta;",
-                "options": [
-                    "Um comparador de identidade de 4 bits tem maior tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
-                    "Não é possivel determinar que um comparador de identidade de 4 bits tenha maior ou menor tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
-                    "Um comparador de identidade de 4 bits tem igual tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
-                    "Um comparador de identidade de 4 bits tem menor tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte."
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C3-1-Q6",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Selecione a opção incorreta;",
-                "options": [
-                    "Um temporizador é um tipo especial de contador que mede tempo.",
-                    "Para medir o paso de 1,5 segundos usando um contador decrecente que tem uma frequência de relogio de 1kHz, deve-se carregar 10111011100.",
-                    "Um temporizador pode ser implementado a partir de um contador decrescente.",
-                    "Um temporizador pode ser implementado a partir de um contador crescente.",
-                    "Para medir o paso de 1 segundo usando um contador decrecente que tem uma frequência de relogio de 10kHz, deve-se carregar 10011100001111."
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-1-Q7",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Um multiplicador tipo estilo array de _____ pode ser implementado usando ___ portas AND e ___ somadores.",
-                "options": [
-                    "5x5 - 25 - 4",
-                    "4x4 - 16 - 4",
-                    "4x4 - 8 - 3",
-                    "5x5 - 25 - 5"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-1-Q8",
-                "form": "C3 1",
-                "type": "single",
-                "text": "O processo de impressão a tinta utiliza o espaço de cores _____ e que a mistura das tintas vermelha, verde e azul produz o _____.",
-                "options": [
-                    "CMY - branco",
-                    "CMY - preto",
-                    "RGB - branco",
-                    "RGB - preto"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-1-Q9",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Uma unidades lógico-aritmética é um componenete de bloco operacional que possui apenas entradas e saídas de dados;",
-                "options": [
-                    "Falso",
-                    "Verdadeiro"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-1-Q10",
-                "form": "C3 1",
-                "type": "single",
-                "text": "Nos bancos de registradores, a ramificação de um fio, que somente pode ser feita um certo número de vezes antes de que as correntes nos fios das ramificações sejam pequenas demais para poder controlar eficientemente os transistores, é conhecida como;",
-                "options": [
-                    "Banco de registradores de porta múltipla",
-                    "Buffer",
-                    "Fanout",
-                    "Driver"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C3-2-Q1",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Num circuito somador, o caminho mais longo a través do circuito é conhecido como",
-                "options": [
-                    "Caminho crítico",
-                    "Vai um",
-                    "Propagação",
-                    "Carry out"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-2-Q2",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Um somador com propagação de “vai um” de 16 bits terá um atraso de",
-                "options": [
-                    "8 atrasos de porta",
-                    "32 atrasos de porta",
-                    "16 atrasos de porta",
-                    "64 atrasos de porta"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-2-Q3",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Para um somador de 16 bits, construído com somadores rápidos de quatro bits (cerca de 100 portas), o atraso será de ____ atrasos de porta e o tamanho será em torno de _____ portas.",
-                "options": [
-                    "8 - 400",
-                    "8 - 1600",
-                    "16 - 1600",
-                    "16 - 400"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-2-Q4",
-                "form": "C3 2",
-                "type": "single",
-                "text": "O conceito de lookahead é utilizado em",
-                "options": [
-                    "Somador com propagação",
-                    "Circuitos chocantemente grandes",
-                    "Somador com lógica de dois níveis",
-                    "Somador com antecipação de transporte"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C3-2-Q5",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Pode-se usar o termo \"Somador hierárquico\" para denominar um",
-                "options": [
-                    "Somador com antecipação de transporte de multiplos níveis",
-                    "Somador com lógica de dois níveis",
-                    "Somador com propagação",
-                    "Somador com seleção de transporte"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-2-Q6",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Multiplexadores são utilizados em",
-                "options": [
-                    "Somadores com seleção de transporte",
-                    "Somadores hierárquico",
-                    "Somadores com lógica de dois níveis",
-                    "Somadores com propagação"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C3-2-Q7",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Selecione a sequencia que vai do menor ao maior atraso",
-                "options": [
-                    "Propagação do bit de transporte - Seleção de bit de transporte - Antecipação de transporte em múltiplos níveis - Antecipação de transporte - Lógica de dois níveis",
-                    "Lógica de dois níveis - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Seleção de bit de transporte - Propagação do bit de transporte",
-                    "Lógica de dois níveis - Propagação do bit de transporte - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Seleção de bit de transporte",
-                    "Seleção de bit de transporte - Lógica de dois níveis - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Propagação do bit de transporte"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C3-2-Q8",
-                "form": "C3 2",
-                "type": "single",
-                "text": "A idéia de um multiplicador _____ é ter a soma corrente dos(as) ____ parciais e computar um(a) ______ parcial de cada vez, ao invés de computá-los todos ao mesmo tempo, ______ em seguida.",
-                "options": [
-                    "Estilo array - Produtos - Produto - Somando-os",
-                    "Sequencial - Produtos - Soma - Somando-os",
-                    "Estilo array - Somas - Produto - Multiplicando-os",
-                    "Sequencial - Produtos - Produto - Somando-os"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C3-2-Q9",
-                "form": "C3 2",
-                "type": "single",
-                "text": "Em termos de desempenho, o multiplicador seqüencial requer 2 ciclos por bit, mais 1 ciclo para a inicialização. Assim, um multiplicador de __ bits irá requerer ___ ciclos.",
-                "options": [
-                    "4 - 5",
-                    "4 - 13",
-                    "8 -17",
-                    "8 - 24"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C3-2-Q10",
-                "form": "C3 2",
-                "type": "single",
-                "text": "No projeto interno de um multiplicador sequencial o registrador do(a) ____ é inicializado com 0;",
-                "options": [
-                    "Multiplicador",
-                    "Multiplicando",
-                    "Soma corrente",
-                    "Somador de 4 bits"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-1-Q1",
-                "form": "C4 1",
-                "type": "single",
-                "text": "A combinação de um bloco de controle com um bloco operacional é conhecida como",
-                "options": [
-                    "Processador",
-                    "Circuito digital",
-                    "Sistema digital",
-                    "Controlador"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-1-Q2",
-                "form": "C4 1",
-                "type": "single",
-                "text": "O circuito digital que implementa um algoritmo de computador - uma sequência de instruções que realiza que uma tarefa em particular, é denominado como",
-                "options": [
-                    "Processador",
-                    "Processador customizado",
-                    "Processador programável",
-                    "Componente digital de baixo nível"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C4-1-Q3",
-                "form": "C4 1",
-                "type": "single",
-                "text": "Selecione a alternativa que complete a seguinte frase: No projeto em nível de transferência entre registradores; o projetista ______ os registradores, ______ as possíveis transferências e operações a serem realizadas com os dados de entrada, de saída e dos registradores, e ______ o controle que especifica quando transferir e operar os dados",
-                "options": [
-                    "Define – Especifica – Descreve",
-                    "Descreve – Especifica – Define",
-                    "Especifica – Define – Descreve",
-                    "Especifica – Descreve – Define"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-1-Q4",
-                "form": "C4 1",
-                "type": "single",
-                "text": "Selecione a sequência de passos do método RTL;",
-                "options": [
-                    "Obtenção de uma máquina de estados de alto nível – Criação de bloco operacional – Conexão do bloco operacional com o bloco de controle – Obtenção da FSM do bloco de controle",
-                    "Obtenção da FSM do bloco de controle – Criação de bloco operacional – Conexão do bloco operacional com o bloco de controle – Obtenção de uma máquina de estados de alto nível",
-                    "Obtenção de uma máquina de estados de alto nível –Conexão do bloco operacional com o bloco de controle – Criação de bloco operacional – Obtenção da FSM do bloco de controle",
-                    "Obtenção da FSM do bloco de controle – Conexão do bloco operacional com o bloco de controle – Criação de bloco operacional – Obtenção de uma máquina de estados de alto nível"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-1-Q5",
-                "form": "C4 1",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta",
-                "options": [
-                    "Em uma FSMD as ações e as condições podem envolver também equações e expressões aritméticas em geral, e não apenas booleanas",
-                    "Uma máquina de estados de alto nível pode ser chamado de FSM com dados",
-                    "Em uma FSMD as entradas e as saídas não podem envolver outros tipos de dados além de simples bits",
-                    "Em uma FSMD registradores locais podem ser incluídos (com vários tipos de dados)"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-1-Q6",
-                "form": "C4 1",
-                "type": "multi",
-                "text": "Selecione os casos que podem ser abordados pelo método de projeto RTL;",
-                "options": [
-                    "Filtro FIR",
-                    "Compressão de vídeo",
-                    "Medidor de distância baseado em raio laser",
-                    "Interface de barramento"
-                ],
-                "correct": [
-                    0,
-                    1,
-                    2,
-                    3
-                ]
-            },
-            {
-                "id": "C4-1-Q7",
-                "form": "C4 1",
-                "type": "single",
-                "text": "Define uma sequência de ações linhas de dados, endereço e controle de modo a realizar uma transferência de dados nessas linhas de um processador a outro;",
-                "options": [
-                    "Protocolo de barramento",
-                    "Soma das diferenças absolutas",
-                    "Soma absoluta das diferenças",
-                    "Interface de barramento"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-1-Q8",
-                "form": "C4 1",
-                "type": "single",
-                "text": "Modo de se determinar a similaridade entre dois quadros digitalizados consecutivos em que para cada pixel do quadro 1, se computa a diferença entre esse pixel e o seu correspondente no quadro 2 e se soma os valores absolutos das diferenças de cada pixel.",
-                "options": [
-                    "Soma absoluta das diferenças",
-                    "Interface de barramento",
-                    "Soma das diferenças absolutas",
-                    "Protocolo de barramento"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-1-Q9",
-                "form": "C4 1",
-                "type": "single",
-                "text": "O atraso mais longo de um circuito, entre registradores ou entre uma entrada e um registrador é chamado de;",
-                "options": [
-                    "Overclocking",
-                    "Atraso de propagação",
-                    "Delay",
-                    "Caminho crítico"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-1-Q10",
-                "form": "C4 1",
-                "type": "single",
-                "text": "No _______________ ; a descrição de um sistema é feita inicialmente com uma _________ e depois é convertida em uma ___________.",
-                "options": [
-                    "Projeto em nível comportamental– descrição RTL – linguagem de programação",
-                    "Projeto em nível comportamental – Linguagem de programação – descrição RTL",
-                    "Projeto RTL – descrição RTL – Linguagem de programação",
-                    "Projeto RTL – linguagem de programação – descrição RTL"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C4-2-Q1",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória que utiliza um bloco de armazenamento de bit que pode ser constituído por dois inversores em laço;",
-                "options": [
-                    "ROM",
-                    "DRAM",
-                    "Banco de registradores",
-                    "SRAM"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-2-Q2",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória que precisa de um mecanismo denominado 'refresh' em cada bloco de armazenamento de bit, que é dado antes que os bits sejam completamente descarregados e consequentemente perdidos;",
-                "options": [
-                    "DRAM",
-                    "Banco de registradores",
-                    "SRAM",
-                    "ROM"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-2-Q3",
-                "form": "C4 2",
-                "type": "single",
-                "text": "O atraso entre o instante em que se coloca a entrada de controle de uma RAM (linha rw) em modo leitura e o momento em que a saída (data) torna-se estável é conhecido como;",
-                "options": [
-                    "Tempo de hold",
-                    "Atraso de propagação",
-                    "Tempo de acesso",
-                    "Tempo de setup"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-2-Q4",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta;",
-                "options": [
-                    "Numa DRAM, o bit armazenado altera-se (descarrega-se) mesmo quando se está fornecendo energia e não se está escrevendo no bloco de armazenamento de bit",
-                    "Comparada com uma SRAM, a DRAM pode necessitar de mais tempo para ser acessada",
-                    "Para armazenar o mesmo número de bits, as vantagens de compacidade, de menos a mais, segue a seguinte ordem: Banco de registradores, SRAM e DRAM",
-                    "Uma SRAM deve conter um controlador de memória interno para automaticamente dar ‘refresh’"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-2-Q5",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta;",
-                "options": [
-                    "A ROM é não volátil já que o armazenamento de bit é preservado mesmo após o desligamento do fornecimento de energia, enquanto uma memória RAM é volátil",
-                    "Em uma ROM, o volume ocupado pelo armazenamento de bit pode ser ainda menor do que o de uma RAM",
-                    "Existem dispositivos de memorias RAM que podem preservar os seus conteúdos mesmo sem alimentação elétrica",
-                    "A leitura numa ROM não pode ser mais rápida do que numa DRAM",
-                    "A ROM não consome energia para manter os seus conteúdos"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-2-Q6",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória que tem os seus conteúdos programados no processo de fabricação do chip, conectando os 1s e 0s diretamente às células que devem armazenar o 0 e 1, respectivamente;",
-                "options": [
-                    "Memoria flash",
-                    "EPROM",
-                    "ROM programável por máscara",
-                    "OTP ROM"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-2-Q7",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória que usa um fusível (componente elétrico cuja ligação pode ser destruída passando-se uma corrente acima do normal) em cada célula, de forma que quando o fusível não está queimado aparece um '1' na linha de dados e um '0' no caso contrário;",
-                "options": [
-                    "EPROM",
-                    "EEPROM",
-                    "ROM programável por máscara",
-                    "Memoria flash",
-                    "OTP ROM"
-                ],
-                "correct": [
-                    4
-                ]
-            },
-            {
-                "id": "C4-2-Q8",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória que usa um tipo especial de transistor (que contém uma porta flutuante) em cada célula pode ser escrita usando elevadas tensões e pode ser pode ser restaurada ao ser exposto à luz UV;",
-                "options": [
-                    "EEPROM",
-                    "EPROM",
-                    "Memoria flash",
-                    "ROM programável por máscara",
-                    "OTP ROM"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C4-2-Q9",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Tipo de memória na qual todas as palavras de um grande bloco de memória podem ser apagadas muito rapidamente (possivelmente ao mesmo tempo), ao invés de uma palavra por vez, utilizando métodos de programação baseadas em tensões elevadas;",
-                "options": [
-                    "OTP ROM",
-                    "EPROM",
-                    "EEPROM",
-                    "Memoria flash",
-                    "ROM programável por máscara"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-2-Q10",
-                "form": "C4 2",
-                "type": "single",
-                "text": "Selecione a alternativa incorreta;",
-                "options": [
-                    "Uma fila é uma lista que é escrita no fim, mas é lida no seu inicio",
-                    "A condição Cheia numa fila pode ser detectada quando \"inicio=fim\"",
-                    "Uma fila é conhecida como sendo do tipo FIFO",
-                    "A condição Vazia em uma fila pode ser detectada quando \"inicio=fim\"",
-                    "Numa fila, a leitura não remove o item lido da lista"
-                ],
-                "correct": [
-                    4
-                ]
-            },
-            {
-                "id": "C4-3-Q1",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: \"Na técnica de pipelining, o(a) ______ significa dividir uma tarefa grande em estágios sucessivos, de tal modo que os dados passam por eles como as partes que se deslocam através de uma linha de montagem de uma fábrica. Cada estágio produz uma saída que será́ usada pelo estágio seguinte e todos os estágios trabalham concorrentemente (isto é, ao mesmo tempo). Desse modo, obtém-se um desempenho melhor do que se os dados da tarefa tivessem de ser completamente processados antes que novos dados pudessem começar a ser processados. \"",
-                "options": [
-                    "Implementação de sistemas digitais",
-                    "Obtenção de velocidade em circuitos digitais",
-                    "Desenvolvimento de projetos menores",
-                    "Uso de microprocessadores mais rápidos e de menor custo"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C4-3-Q2",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: “As computações feitas entre os __________ de pipeline são conhecidas como _______.”",
-                "options": [
-                    "Registradores - Estágios",
-                    "Tarefas - Estágios",
-                    "Registradores - Tarefas",
-                    "Estágios - Registradores"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-3-Q3",
-                "form": "C4 3",
-                "type": "multi",
-                "text": "Com respeito à figura a seguir, selecione a(s) opção(ões) correta(s); <imagem4>",
-                "options": [
-                    "Possui 2 registradores de pipeline",
-                    "Possui 5 registradores",
-                    "Possui 2 estágios",
-                    "Representa um bloco de controle"
-                ],
-                "correct": [
-                    0,
-                    2
-                ],
-                "image": "img/imagem4"
-            },
-            {
-                "id": "C4-3-Q4",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Com respeito à figura a seguir, selecione a(s) opção(ões) correta(s); <imagem5>",
-                "options": [
-                    "O throughput na Figura A é menor que o throughput na Figura B",
-                    "A latência na Figura A é menor que a latência na Figura B",
-                    "O throughput na Figura A é maior que o throughput na Figura B",
-                    "A latência na Figura A é maior que a latência na Figura B"
-                ],
-                "correct": [
-                    0
-                ],
-                "image": "img/imagem5"
-            },
-            {
-                "id": "C4-3-Q5",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: “Em projeto digital, _________ significa dividir uma tarefa em diversas subpartes independentes e, então, executá-las ___________.”",
-                "options": [
-                    "Concorrência – Sequencialmente",
-                    "Pipeline – Simultaneamente",
-                    "Concorrência – Simultaneamente",
-                    "Pipeline – Sequencialmente"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C4-3-Q6",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Selecione a opção que complete a seguinte frase: “A escolha de um conjunto particular de unidades _________ para implementar um conjunto de operações é conhecida como __________.”",
-                "options": [
-                    "Funcionais - Alocação de componentes",
-                    "De controle - Alocação de componentes",
-                    "Funcionais – Mapeamento de operadores",
-                    "De controle - Mapeamento de operadores"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-3-Q7",
-                "form": "C4 3",
-                "type": "single",
-                "text": "Selecione a opção incorreta;",
-                "options": [
-                    "Em conjunto, a alocação de componentes e o mapeamento de operadores são referidos algumas vezes como compartilhamento de recursos.",
-                    "A alocação de muitos componentes fornece mais opções de mapeamento.",
-                    "O mapeamento de um conjunto dado de operações a uma alocação de componentes em particular é conhecido “operator binding”.",
-                    "As tarefas de alocação de componentes e mapeamento de operadores são independentes."
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C4-3-Q8",
-                "form": "C4 3",
-                "type": "single",
-                "text": "A conversão de uma computação, que é realizada concorrentemente em um estado, para ser realizada ocupando diversos estados é conhecida como paralelização de uma computação.",
-                "options": [
-                    "Verdadeiro",
-                    "Falso"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C4-3-Q9",
-                "form": "C4 3",
-                "type": "single",
-                "text": "A introdução ou combinação de estados e a atribuição de operações a esses estados é uma tarefa conhecida como Operator Scheduling.",
-                "options": [
-                    "Verdadeiro",
-                    "Falso"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C4-3-Q10",
-                "form": "C4 3",
-                "type": "single",
-                "text": "As tarefas de escalonamento, alocação e mapeamento são todas independentes entre si.",
-                "options": [
-                    "Falso",
-                    "Verdadeiro"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C5-1-Q1",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Selecione a alternativa que não corresponde a processadores programáveis;",
-                "options": [
-                    "Podem executar programas aplicativos como editores de texto, planilhas eletrônicas, jogos de vídeo ou navegadores web",
-                    "Circuitos digitais que executam uma única tarefa de processamento permitindo uma computação extremadamente rápida ou eficiente em termos de consumo energético",
-                    "Circuitos digitais cuja tarefa de processamento é representada por um programa e ao invés de ser construída no próprio circuito, fica armazenada na memória",
-                    "Foram planejados para serem usados em computadores de mesa (desktop) e/ou em sistemas embarcados como telefones celulares"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C5-1-Q2",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Com respeito aos processadores programáveis, selecione a sequência do processamento em um bloco operacional básico;",
-                "options": [
-                    "Armazenamento - Transformação - Carga",
-                    "Carga - Transformação - Armazenamento",
-                    "Carga – Armazenamento - Transformação",
-                    "Armazenamento – Carga - Transformação"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C5-1-Q3",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Elemento que guarda todos os dados que um processador programável poderá acessar, como dados de entrada e saída;",
-                "options": [
-                    "Memória de dados",
-                    "Bloco operacional",
-                    "Banco de registradores",
-                    "Memoria de instruções"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C5-1-Q4",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Em um dado ciclo de relógio, o bloco operacional pode executar;",
-                "options": [
-                    "Operação de carga ou Operação de ALU ou Operação de armazenamento",
-                    "Operação de carga e Operação de ALU e Operação de armazenamento"
-                ],
-                "correct": [
-                    0
-                ]
-            },
-            {
-                "id": "C5-1-Q5",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Selecione os nomes correspondentes dos componentes 'a', 'b', 'c' e 'd' do bloco operacional mostrado na figura a seguir <imagem6>",
-                "options": [
-                    "RF – MUX – Memória de dados – ALU",
-                    "Memória de dados – ALU – RF – RF",
-                    "MUX – Memória de dados –RF – ALU",
-                    "Memória de dados – MUX – RF – ALU"
-                ],
-                "correct": [
-                    3
-                ],
-                "image": "img/imagem6"
-            },
-            {
-                "id": "C5-1-Q6",
-                "form": "C5 1",
-                "type": "multi",
-                "text": "Selecione as operações válidas do bloco operacional da figura abaixo, usando um único ciclo de relógio; <imagem6>",
-                "options": [
-                    "Copiar dados de uma posição de memória, colocando-os em uma posição do RF",
-                    "Ler dados de duas posições de uma memória de dados, colocando em duas posições de um RF",
-                    "Copiar dados de uma posição de um RF, colocando-os em outra posição do RF",
-                    "Subtrair os dados de uma posição de um RF de uma posição de uma memória de dados, armazenando o resultado em uma posição do RF",
-                    "Somar dados de duas posições de uma memória de dados e armazenar o resultado em uma posição de um RF"
-                ],
-                "correct": [
-                    0,
-                    2
-                ],
-                "image": "img/imagem6"
-            },
-            {
-                "id": "C5-1-Q7",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Selecione a alternativa que completa a seguinte frase: A descrição das operações que executa um bloco operacional é conhecido(a) como _______; uma coleção destas descrições é conhecido(a) como ________ o(a) qual fica armazenado em uma __________;",
-                "options": [
-                    "Programa – Instrução –Memória de dados",
-                    "Programa – Instrução –Memória de instruções",
-                    "Instrução – Programa – Memória de programa",
-                    "Instrução – Programa – Memória de dados"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C5-1-Q8",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Selecione a sequência de estágios que realiza o bloco de controle a fim de executar uma instrução;",
-                "options": [
-                    "Execução – Busca – Decodificação",
-                    "Decodificação – Busca - Execução",
-                    "Busca – Decodificação – Execução",
-                    "Busca – Execução - Decodificação"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C5-1-Q9",
-                "form": "C5 1",
-                "type": "single",
-                "text": "A unidade de controle armazena uma instrução buscada em um registrador local que é conhecido como ____. O contador crescente usado para avançar de uma instrução a um outra instrução de um programa é conhecido como ____ .",
-                "options": [
-                    "RF – PC",
-                    "PC – RF",
-                    "IR – PC",
-                    "PC – IR"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C5-1-Q10",
-                "form": "C5 1",
-                "type": "single",
-                "text": "Com respeito aos processadores programáveis, as operações que podem ser de três tipos possiveis (Carregar, Transformar e Armazenar) são realizados pelo(a);",
-                "options": [
-                    "Unidade de controle",
-                    "Bloco operacional",
-                    "ALU",
-                    "Memória"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C5-2-Q1",
-                "form": "C5 2",
-                "type": "multi",
-                "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, na instrução “0000 0000 00000000” que especifica uma movimentação de dados desde a posição 0 da memória de dados, ou D[0], até́ a posição 0 do banco de registradores, ou RF[0]; os primeiros quatro bits são conhecidos como ...",
-                "options": [
-                    "Código de operação da instrução",
-                    "Operandos",
-                    "Instrução",
-                    "Op- code"
-                ],
-                "correct": [
-                    0,
-                    3
-                ]
-            },
-            {
-                "id": "C5-2-Q2",
-                "form": "C5 2",
-                "type": "single",
-                "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, na instrução “0000 0000 00000000” que especifica uma movimentação de dados desde a posição 0 da memória de dados, ou D[0], até́ a posição 0 do banco de registradores, ou RF[0]; os 12 últimos bits representam ...",
-                "options": [
-                    "O código de operação da instrução",
-                    "O op- code",
-                    "Uma instrução",
-                    "Os operandos"
-                ],
-                "correct": [
-                    3
-                ]
-            },
-            {
-                "id": "C5-2-Q3",
-                "form": "C5 2",
-                "type": "multi",
-                "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, o programa a seguir computa ... <imagem7>",
-                "options": [
-                    "D1 = D2 + D9",
-                    "D1 = D0 + D9",
-                    "D9 = D0 + D2",
-                    "D9 = D0 + D1"
-                ],
-                "correct": [
-                    0,
-                    1,
-                    2,
-                    3
-                ],
-                "image": "img/imagem7"
-            },
-            {
-                "id": "C5-2-Q4",
-                "form": "C5 2",
-                "type": "single",
-                "text": "Selecione a alternativa que completa a seguinte frase: “Em uma memória de __________, as instruções de um programa existem como 0s e 1s; e um programa representado por 0s e 1s é conhecido como código __________.”",
-                "options": [
-                    "Dados - Assembly",
-                    "Dados - De máquina",
-                    "Instruções - De máquina",
-                    "Instruções - Assembly"
-                ],
-                "correct": [
-                    2
-                ]
-            },
-            {
-                "id": "C5-2-Q5",
-                "form": "C5 2",
-                "type": "single",
-                "text": "Selecione a alternativa que completa a seguinte frase: “O programa escrito com mnemônicos é conhecido como _____ e a ferramenta que traduz os mnemônicos para 1s e 0s é conhecido como __________.”",
-                "options": [
-                    "Código de Máquina – Programa Assembler",
-                    "Código Assembly – Programa Assembler",
-                    "Código Assembly – Código de Máquina",
-                    "Código de Máquina - Código Assembly"
-                ],
-                "correct": [
-                    1
-                ]
-            },
-            {
-                "id": "C5-2-Q6",
-                "form": "C5 2",
-                "type": "multi",
-                "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, o programa a seguir computa ... <imagem8>",
-                "options": [
-                    "D9 = D0 + D1",
-                    "D1 = D0 + D9",
-                    "D1 = D2 + D9",
-                    "D9 = D0 + D2"
-                ],
-                "correct": [
-                    0,
-                    1,
-                    2,
-                    3
-                ],
-                "image": "img/imagem8"
-            },
-            {
-                "id": "C5-2-Q7",
-                "form": "C5 2",
-                "type": "single",
-                "text": "Na figura a seguir, os rótulos (a), (b) e (c) representam, respectivamente; <imagem9>",
-                "options": [
-                    "Registro de instruções - Contador de programa - Unidade de controle",
-                    "Contador de programa – Registro de instruções - Bloco de controle",
-                    "Contador de programa – Registro de instruções - Unidade de controle",
-                    "Registro de instruções - Contador de programa - Bloco de controle"
-                ],
-                "correct": [
-                    1
-                ],
-                "image": "img/imagem9"
-            },
-            {
-                "id": "C5-2-Q8",
-                "form": "C5 2",
-                "type": "single",
-                "text": "Na figura a seguir, a memória de dados possui ____; enquanto o banco de registradores possui _________. <imagem10>",
-                "options": [
-                    "Entrada e saída de dados separadas – Uma entrada de dados",
-                    "Entrada/Saída de dados bidirecional - Uma entrada de dados",
-                    "Entrada/Saída de dados bidirecional - Duas saídas de dados",
-                    "Entrada e saída de dados separadas – Duas saídas de dados"
-                ],
-                "correct": [
-                    3
-                ],
-                "image": "img/imagem10"
-            },
-            {
-                "id": "C5-2-Q9",
-                "form": "C5 2",
-                "type": "single",
-                "text": "No processador programável de três instruções descrito na Seção 8.3, o estado mostrado na figura a seguir corresponde a (caiu na prova). <imagem11>",
-                "options": [
-                    "O estado “Inicio” da FSM",
-                    "O estado “Inicio” da máquina de estados de alto nível",
-                    "O estado “Busca” da máquina de estados de alto nível",
-                    "O estado “Busca” da FSM"
-                ],
-                "correct": [
-                    2
-                ],
-                "image": "img/imagem11"
-            },
-            {
-                "id": "C5-2-Q10",
-                "form": "C5 2",
-                "type": "single",
-                "text": "No processador programável de três instruções descrito na Seção 8.3, os estados de execução são ...",
-                "options": [
-                    "Carregar, Armazenar e Somar",
-                    "Decodificar, Carregar, Armazenar e Somar",
-                    "Buscar, Decodificar, Carregar, Armazenar e Somar",
-                    "Carregar e Armazenar"
-                ],
-                "correct": [
-                    0
-                ]
-            }
+    <footer>
+      <span class="muted">Toque numa opção para selecionar (múltipla permite várias).</span>
+      <span class="muted">As questões aparecem em ordem aleatória.</span>
+    </footer>
+  </div>
+
+  <script>
+    // ====== Carrega questoes.json da mesma pasta ======
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function normalizeType(q) {
+      const t = (q?.type || '').toString().toLowerCase();
+      if (t === 'multi' || t === 'multiple') return 'multiple';
+      if (Array.isArray(q?.correct) && q.correct.length > 1) return 'multiple';
+      return 'single';
+    }
+
+    let current = 0;
+    let hits = 0, misses = 0;
+    let locked = false;
+    let questions = []; // embaralhadas
+    let rawQuestions = [
+      {
+        "id": "C0-Q1",
+        "form": "C0",
+        "type": "single",
+        "text": "_______ pode assumir um de um conjunto finito de valores possíveis, a qualquer instante, sendo também conhecido como sinal discreto.",
+        "options": [
+          "Um sinal digital",
+          "Um sistema embarcado",
+          "Um circuito digital",
+          "Um sistema digital",
+          "Um sinal analógico"
+        ],
+        "correct": [
+          0
         ]
-        // ====== 2) Utilidades ======
-        const $ = sel => document.querySelector(sel);
-        const $$ = sel => Array.from(document.querySelectorAll(sel));
-        function shuffle(arr) {
-            const a = arr.slice();
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
+      },
+      {
+        "id": "C0-Q2",
+        "form": "C0",
+        "type": "single",
+        "text": "_______ pode ter um valor de um conjunto infinito de valores possíveis, sendo também conhecido como sinal contínuo.",
+        "options": [
+          "Um sinal analógico",
+          "Um sinal digital",
+          "Um sistema embarcado",
+          "Um circuito digital",
+          "Um sistema digital"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C0-Q3",
+        "form": "C0",
+        "type": "single",
+        "text": "_______ recebe entradas digitais e gera saídas digitais.",
+        "options": [
+          "Um sinal digital",
+          "Um sinal analógico",
+          "Um sistema digital",
+          "Um circuito digital",
+          "Um sistema embarcado"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C0-Q4",
+        "form": "C0",
+        "type": "single",
+        "text": "_______ é uma conexão de componentes digitais que juntos constituem um sistema digital.",
+        "options": [
+          "Um sinal analógico",
+          "Um circuito digital",
+          "Um sinal digital",
+          "Um sistema embarcado",
+          "Um sistema digital"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C0-Q5",
+        "form": "C0",
+        "type": "single",
+        "text": "Os circuitos digitais encontrados nas diferentes aplicações dos computadores de propósitos gerais frequentemente recebem o nome de _________, porque estão colocados dentro de um outro dispositivo eletrônico.",
+        "options": [
+          "Um sinal analógico",
+          "Um sinal digital",
+          "Sistema embarcado",
+          "Um circuito digital",
+          "Um sistema digital"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C0-Q6",
+        "form": "C0",
+        "type": "single",
+        "text": "Mede o fenômeno físico analógico e converte o valor medido em um sinal elétrico. Um exemplo é o microfone (que mede o som), dispositivos de captura de vídeo (que medem a luz), termômetros (que medem a temperatura) e velocímetros (que medem a velocidade).",
+        "options": [
+          "Sensor",
+          "Microprocessador",
+          "Atuador",
+          "Conversor analógico-digital",
+          "Conversor digital-analógico"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C0-Q7",
+        "form": "C0",
+        "type": "single",
+        "text": "Converte o sinal elétrico em códigos binários, amostrando (medindo) o sinal elétrico a uma taxa regular e converter cada amostra em um valor de bits.",
+        "options": [
+          "Atuador",
+          "Conversor analógico-digital",
+          "Microprocessador",
+          "Sensor",
+          "Conversor digital-analógico"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C0-Q8",
+        "form": "C0",
+        "type": "single",
+        "text": "Converte bits de volta à forma de sinal elétrico.",
+        "options": [
+          "Conversor digital-analógico",
+          "Microprocessador",
+          "Sensor",
+          "Atuador",
+          "Conversor analógico-digital"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C0-Q9",
+        "form": "C0",
+        "type": "single",
+        "text": "Converte esse sinal elétrico de volta à forma de fenômeno físico.",
+        "options": [
+          "Microprocessador",
+          "Conversor digital-analógico",
+          "Atuador",
+          "Conversor analógico-digital",
+          "Sensor"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C0-Q10",
+        "form": "C0",
+        "type": "single",
+        "text": "Dispositivo digital programável que executa uma sequência de instruções especificadas pelo usuário, conhecida como programa ou software.",
+        "options": [
+          "Conversor analógico-digital",
+          "Sensor",
+          "Atuador",
+          "Conversor digital-analógico",
+          "Microprocessador"
+        ],
+        "correct": [
+          4
+        ]
+      },
+      {
+        "id": "C1-1-Q1",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Selecione a sequência que mostra a evolução das chaves.",
+        "options": [
+          "Relés; Transistores discretos; Circuitos integrados; Válvulas termiônicas",
+          "Relés; Válvulas termiônicas; Transistores discretos; Circuitos integrados",
+          "Válvulas termiônicas; Relés; Transistores discretos; Circuitos integrados",
+          "Relés; Transistores discretos; Válvulas termiônicas; Circuitos integrados"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C1-1-Q2",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Aplicou a álgebra booleana aos circuitos baseados em chaves dando uma base formal ao projeto de circuitos digitais.",
+        "options": [
+          "George Boole",
+          "Claude Shannon",
+          "Gordon Moore",
+          "William Shockley"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C1-1-Q3",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Enunciado matemático que representa uma função booleana, igualando uma expressão a outra.",
+        "options": [
+          "Tabela-verdade",
+          "Função",
+          "Circuito",
+          "Equação"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q4",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Interconexão de componentes que descreve uma função booleana.",
+        "options": [
+          "Circuito",
+          "Função",
+          "Equação",
+          "Tabela-verdade"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C1-1-Q5",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Forma de representar uma função booleana que lista as variáveis de entrada e mostra todas as combinações possíveis de valores para essas entradas.",
+        "options": [
+          "Circuito",
+          "Equação",
+          "Tabela-verdade",
+          "Função"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C1-1-Q6",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Termo de produto que contém todas as literais da função exatamente uma vez, seja na forma afirmada ou na complementada.",
+        "options": [
+          "Forma canónica",
+          "Maxtermo",
+          "Implementação lógica de dois níveis",
+          "Mintermo"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q7",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Termo de soma em que cada uma das variáveis aparece exatamente uma vez, seja na forma afirmada, seja na forma complementada.",
+        "options": [
+          "Mintermo",
+          "Implementação lógica de dois níveis",
+          "Forma canónica",
+          "Maxtermo"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q8",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Circuitos baseados em portas lógicas, projetados de tal forma que as entradas alimentam uma coluna de AND que por sua vez alimentam uma porta OR simples.",
+        "options": [
+          "Forma canónica",
+          "Implementação lógica de dois níveis",
+          "Maxtermo",
+          "Mintermo"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C1-1-Q9",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Selecione a alternativa que representa a forma padrão de uma equação booleana.",
+        "options": [
+          "G(a,b,c,d,e) = abcd + a'bcde",
+          "K(a,b,c,d,e,f) = a'bcde + abcde' + abcde",
+          "F(a,b,d,c,e) = a'bcde + abcde' + abcde",
+          "H(a,b,c,d,e) = abcde + abcde' + a'bcde + a'bcde(a' + c)"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C1-1-Q10",
+        "form": "C1 1",
+        "type": "single",
+        "text": "Programa de computador que realiza o processo de se fornecer valores de entradas a um circuito e executar um programa de computador que calcula a saída do circuito com e essas entradas.",
+        "options": [
+          "Simulador",
+          "Processador",
+          "Linguagem de descrição de hardware",
+          "Ferramenta de captura de esquemático"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C1-1-Q1",
+        "form": "C1",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: A realização de transformações que melhoram critérios de interesse como o tamanho do circuito ou o atraso de propagação é denominado de ______; enquanto a melhora de um critério de interesse às custas de outro é denominado de ____.",
+        "options": [
+          "Otimização – Minimização",
+          "Tradeoff – Otimização",
+          "Minimização - Tradeoff",
+          "Otimização – Tradeoff"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q2",
+        "form": "C1",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: Para os projetistas de sistemas digitais, alguns critérios gerais comumente de interesse são: o(a) _____, que é uma medida do número de transistores, ou da área de silício, de um sistema digital; o(a) ________, que é uma medida do tempo de execução de uma computação pelo sistema; e, o(a) _______, que é medida da energia consumida em um segundo por um sistema, diretamente relacionada com o calor gerado pelo sistema e a energia que é consumida das baterias pelas computações.",
+        "options": [
+          "Desempenho – Tamanho – Potência consumida",
+          "Potência – Desempenho – Temperatura",
+          "Nível de integração - Desempenho – Temperatura",
+          "Tamanho – Desempenho – Potência consumida"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q3",
+        "form": "C1",
+        "type": "single",
+        "text": "A minimização do número de transistores usados na implementação de um circuito lógico não pode ser referida como;",
+        "options": [
+          "Otimização da lógica de dois níveis",
+          "Minimização de lógica de dois níveis",
+          "Otimização de tamanho de lógica de dois níveis",
+          "Otimização de desempenho e potência"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q4",
+        "form": "C1",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: O problema da otimização da lógica de dois níveis pode ser visto _________ como sendo um problema de minimização do número de _________ de um(a) __________ o(a) qual está na forma de uma soma de produtos.",
+        "options": [
+          "Algebricamente – Termos e literais - Equação booleana",
+          "Algebricamente - Termos e literais - Circuito combinacional",
+          "Graficamente – Portas lógicas – Equação booleana",
+          "Algebricamente – Portas lógicas – Circuito combinacional"
+        ],
+        "correct": [0]
+      },
+      {
+        "id": "C1-1-Q5",
+        "form": "C1",
+        "type": "single",
+        "text": "Selecione a opção que não corresponde ao Mapa K;",
+        "options": [
+          "É essencialmente uma representação gráfica de um tabela-verdade",
+          "Constitui um método visual",
+          "É mais uma maneira de representar uma função",
+          "Ajuda minimizar algebricamente as equações booleanas que têm muitas variáveis"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q6",
+        "form": "C1",
+        "type": "single",
+        "text": "Selecione a opção que não corresponde à minimização usando mapa K;",
+        "options": [
+          "Converta a função da equação para uma forma de soma de mintermos.",
+          "Coloque um 1 na célula apropriada do mapa K para cada mintermo.",
+          "Cubra todos os 1s desenhando um número mínimo de maiores círculos possíveis, de modo que cada 1 seja incluído ao menos uma vez, escreva o termo correspondente.",
+          "Faça AND de todos os termos resultantes para criar a função minimizada."
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q7",
+        "form": "C1",
+        "type": "single",
+        "text": "Um algoritmo exato é um método de resolução de problemas que usualmente fornece uma boa solução, idealmente próxima da ótima, mas que não é a ótima. Uma heurística é um método de resolução de problemas que fornece a solução ótima. Do ponto de vista dos critérios de interesse, uma solução ótima é uma solução tão boa ou melhor do que qualquer outra possível.",
+        "options": [
+          "Verdadeiro",
+          "Falso"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C1-1-Q8",
+        "form": "C1",
+        "type": "single",
+        "text": "Com respeito a abordagem para otimização automatizada do tamanho de uma lógica de dois níveis, selecione a sequência de passos correta;",
+        "options": [
+          "Determine os implicantes primos - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais",
+          "Determine os implicantes - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais",
+          "Determine os implicantes primos essencias - Acrescente implicantes primos à cobertura da função - Cubra os demais mintermos com implicantes primos",
+          "Determine os implicantes primos - Acrescente implicantes à cobertura da função - Cubra os demais mintermos com implicantes primos não essenciais"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C1-1-Q9",
+        "form": "C1",
+        "type": "single",
+        "text": "Dadas as equações \"F1 = ab + acd + ace\" e \"F2 = a(b+c(d+e))\"; selecione a opção correta;",
+        "options": [
+          "F1 utiliza menos transistores e apresenta maior atraso que F2",
+          "F1 utiliza menos transistores e apresenta menor atraso que F2",
+          "F1 utiliza mais transistores e apresenta maior atraso que F2",
+          "F1 utiliza mais transistores e apresenta menor atraso que F2"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C1-1-Q10",
+        "form": "C1",
+        "type": "single",
+        "text": "Dadas as equações “F1 = (a+b)c+dfg+efg” e “F2 = (a+b)c + (d+e)fg”; selecione a opção correta;",
+        "options": [
+          "F1 utiliza menos transistores e apresenta maior atraso que F2",
+          "F1 utiliza mais transistores e apresenta igual atraso que F2",
+          "F1 utiliza menos transistores e apresenta menor atraso que F2",
+          "F1 utiliza mais transistores e apresenta menor atraso que F2"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C2-1-Q1",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: As saídas de circuito _______ dependem não somente das entradas atuais, mas também do(a) seu ______ atual (conjunto de bits armazenado no circuito) que por sua vez depende da(o) _______ passada(o) de valores que apareceram nas entradas do circuito.",
+        "options": [
+          "Sequencial – Sequência – Memória",
+          "Com memória – Estado – Saída",
+          "Com memória – Saída – Entrada",
+          "Sequencial – Estado – Sequência"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C2-1-Q2",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Método básico usado para armazenar um bit em um circuito digital.",
+        "options": [
+          "Amplificação",
+          "Sequenciação",
+          "Oscilação",
+          "Realimentação"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C2-1-Q3",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Um latch SR com portas NOR pode entrar em oscilação quando",
+        "options": [
+          "S = 1 e R = 1",
+          "S = 0 e R = 1",
+          "S = 1 e R = 0",
+          "S = 0 e R = 0"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q4",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Com respeito ao flip-flop D, selecione a alternativa incorreta;",
+        "options": [
+          "É sensível ao nível",
+          "É sensível à borda",
+          "Pode ser implementado usando dois latches D",
+          "Pode armazenar um bit"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q5",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Com respeito ao Registrador, selecione a alternativa incorreta;",
+        "options": [
+          "As suas entradas são carregadas sequencialmente quando o relógio muda de nível",
+          "Pode ser construído usando múltiplos flip-flops",
+          "Um registrador de oito bits pode ser chamado de “flip-flop D de 8 bits”",
+          "Componente sequencial que pode armazenar múltiplos bits"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q6",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: Em um circuito digital, um(a) _________ armazena bits. Bits armazenados significam que o sistema tem ________ o que também é conhecido como ________, resultando em circuitos chamados de _________.",
+        "options": [
+          "Registrador – Memória – Estado – Combinacionais",
+          "Registrador – Memória – Estado – Sequenciais",
+          "Estado – Registrador – Memória – Sequenciais",
+          "Memória – Estado – Registrador – Sequenciais"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C2-1-Q7",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Um circuito sequencial que controla saídas booleanas com base em entradas booleanas e um comportamento específico, ordenado no tempo, é referido frequentemente como sendo um:",
+        "options": [
+          "Bloco de controle",
+          "Máquina de estados finito (FSM)",
+          "Registrador",
+          "Estado"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q8",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Com respeito a uma máquina de estados finitos (FSM), selecione a sequencia que corresponda às frases a seguir; I) Aresta orientada ou dirigida que indica para qual estado deve-se ir baseado no estado atual e nos valores de entrada; II) Estado para se começar quando um sistema é energizado e que é indicado graficamente por uma aresta que não tem estado de origem; III) Representação gráfica que permitem visualizar o comportamento da FSM; IV) Atribuição dos valores de saída que devem ser gerados em cada estado",
+        "options": [
+          "Transição - Estado inicial - Diagrama de estados - Ação",
+          "Ação - Transição - Estado inicial - Diagrama de estados",
+          "Transição - Diagrama de estados- Estado inicial - Ação",
+          "Ação - Estado inicial - Transição - Diagrama de estados"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q9",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Com respeito ao \"Processo de projeto de bloco de controle\", selecione a sequência de passos correta.",
+        "options": [
+          "Captura de FSM – Criação de arquitetura – Codificação de estados – Criação de tabela de estados – Implementação de lógica combinacional",
+          "Criação de arquitetura – Captura de FSM – Codificação de estados – Criação de tabela de estados – Implementação de lógica combinacional",
+          "Criação de arquitetura – Codificação de estados – Captura de FSM – Criação de tabela de estados – Implementação de lógica combinacional",
+          "Codificação de estados – Captura de FSM – Criação de arquitetura –Criação de tabela de estados – Implementação de lógica combinacional"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-1-Q10",
+        "form": "C2 1",
+        "type": "single",
+        "text": "Com respeito a uma máquina de estados finitos (FSM), selecione a sequencia que corresponda às frases a seguir; I) Corresponde à atribuição de um número binário único a cada um dos estados num bloco de controle. II) Gera as saídas e os sinais do próximo estado da FSM a partir das entradas e os bits de estado, no contexto do bloco de controle. III) Está composta(o) por um registrador de estado e uma lógica combinacional, cujas entradas são os bits do registrador de estado e as entradas da FSM e cujas saídas são os bits do próximo estado e as saídas da FSM;",
+        "options": [
+          "Codificação de estados - Lógica combinacional - Arquitetura",
+          "Codificação de estados - Lógica sequencial - Arquitetura",
+          "Codificação de estados - Arquitetura - Lógica combinacional",
+          "Lógica combinacional - Lógica sequencial - Arquitetura"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-2-Q1",
+        "form": "C2 2",
+        "type": "single",
+        "text": "Selecione a opção que complete a frase a seguir; \"A ______ de estados, também conhecida como ________ de estados, é uma _______ que reduz o número de estados de uma FSM sem alterar o seu comportamento.\"",
+        "options": [
+          "Redução - Minimização - Otimização",
+          "Redução - Codificação - Otimização",
+          "Otiização - Tradeoff - Minimização",
+          "Minimização - Implicação - Redução"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-2-Q2",
+        "form": "C2 2",
+        "type": "multi",
+        "text": "Dois estados são equivalentes se:",
+        "options": [
+          "Esses estados atribuem os mesmos valores às saídas.",
+          "Para todas as sequências possíveis de entradas, as saídas da FSM serão as mesmas quando se inicia em qualquer um desses estados.",
+          "Para todas as sequências possíveis de transições, as saídas da FSM serão as mesmas quando se inicia em qualquer um desses estados.",
+          "Esses estados atribuem os mesmos valores às entradas."
+        ],
+        "correct": [
+          0,
+          1
+        ]
+      },
+      {
+        "id": "C2-2-Q3",
+        "form": "C2 2",
+        "type": "multi",
+        "text": "Na figura a seguir;",
+        "options": [
+          "Os estados S0 e S2 são equivalentes.",
+          "Os estados S1 e S3 são equivalentes.",
+          "Os estados S0 e S2 não são equivalentes.",
+          "Os estados S1 e S3 não são equivalentes."
+        ],
+        "correct": [
+          0,
+          1
+        ],
+        "image": "img/imagem1"
+      },
+      {
+        "id": "C2-2-Q4",
+        "form": "C2 2",
+        "type": "multi",
+        "text": "Na figura a seguir;",
+        "options": [
+          "Os estados S0 e S2 são equivalentes.",
+          "Os estados S1 e S3 são equivalentes.",
+          "Os estados S0 e S2 não são equivalentes.",
+          "Os estados S1 e S3 não são equivalentes."
+        ],
+        "correct": [
+          1,
+          2
+        ],
+        "image": "img/imagem2"
+      },
+      {
+        "id": "C2-2-Q5",
+        "form": "C2 2",
+        "type": "multi",
+        "text": "Com respeito à redução de estados, selecione as opções corretas;",
+        "options": [
+          "Para um dado valor de entrada, se os próximos estados dos dois estados não forem equivalentes, então os dois estados também não serão equivalentes.",
+          "Se as saídas de dois estados não forem iguais, os dois estados não serão equivalentes;",
+          "Para um dado valor de entrada, se os próximos estados dos dois estados forem equivalentes, então os dois estados não serão equivalentes.",
+          "Se as saídas de dois estados não forem iguais, os dois estados podem ser equivalentes;"
+        ],
+        "correct": [
+          0,
+          1
+        ]
+      },
+      {
+        "id": "C2-2-Q6",
+        "form": "C2 2",
+        "type": "single",
+        "text": "A tabela de implicação da figura a seguir indica que; <imagem3>",
+        "options": [
+          "Existem dois estados equivalentes",
+          "Existem três estados equivalentes",
+          "Não existem estados equivalentes",
+          "Existem seis estados equivalentes"
+        ],
+        "correct": [
+          2
+        ],
+        "image": "img/imagem3"
+      },
+      {
+        "id": "C2-2-Q7",
+        "form": "C2 2",
+        "type": "single",
+        "text": "Selecione a opção que não corresponde a um método de codificação de estados;",
+        "options": [
+          "Codificações binárias alternativas com largura de bits mínima.",
+          "Codificação usando um bit por saída.",
+          "Codificação usando one-hot encoding.",
+          "Codificação de saída."
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C2-2-Q8",
+        "form": "C2 2",
+        "type": "single",
+        "text": "O caso em que \"as saídas estarão ligadas por conexões diretamente aos bits do registrador de estado\" corresponde ao método de codificação de estados de",
+        "options": [
+          "Codificação de saída",
+          "Codificações binárias alternativas com largura de bits mínima",
+          "Codificação usando um bit por saída",
+          "Codificação usando one-hot encoding"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-2-Q9",
+        "form": "C2 2",
+        "type": "single",
+        "text": "Selecione a opção que completa a frase a seguir; \"Uma FSM _____ é uma FSM cujas _____ são uma função dos estados da FSM. Uma FSM ______ é uma FSM cujas ______ são uma função dos estados da FSM e das _______.\"",
+        "options": [
+          "Moore - Saídas - Mealy - Saídas - Entradas",
+          "Moore - Entradas- Mealy - Saídas - Saídas",
+          "Mealy - Saídas - Moore- Saídas - Entradas",
+          "Mealy - Entradas- Mealy - Entradas - Saídas"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C2-2-Q10",
+        "form": "C2 2",
+        "type": "single",
+        "text": "Gráficamente, as atribuições de saída de uma FSM Mealy são listadas com cada estado, e não com cada transição.",
+        "options": [
+          "Verdadeiro",
+          "Falso"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-1-Q1",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta;",
+        "options": [
+          "Registradores e unidades funcionais são conhecidos como componentes de do RTL, e tais componentes compõem circuitos conhecidos como Datapaths.",
+          "Uma entrada de dados não pode ter apenas um único bit porque não seria possível se diferenciar de uma entrada de controle.",
+          "Uma entrada de dados tipicamente tem bits múltiplos que em conjunto representam uma entidade única.",
+          "Uma entrada de controle tem tipicamente um bit que representa algum evento específico que está ocorrendo fora do sistema.",
+          "É possível um sistema digital ter outro tipo de entradas além das entradas de controle e de dados."
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-1-Q2",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Selecione a sequência de passos para o processo de projeto de registradores;",
+        "options": [
+          "Criação da tabela de funções do multiplexador - Determinação do tamanho do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle",
+          "Determinação do tamanho do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle - Criação da tabela de funções do multiplexador",
+          "Determinação do tamanho do multiplexador - Mapeamento das linhas de controle - Criação da tabela de funções do multiplexador - Conexão das entradas do multiplexador",
+          "Determinação do tamanho do multiplexador - Criação da tabela de funções do multiplexador - Conexão das entradas do multiplexador - Mapeamento das linhas de controle"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C3-1-Q3",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta;",
+        "options": [
+          "O crescimento exponencial do número de transistores impede usar o Projeto lógico combinacional para somadores com larguras supeiores a 10.",
+          "Implementar um somador de N bits seguindo o Projeto lógico combinacional deixa de ser prático quando N>4.",
+          "A implementação de um somador de 16 bits seguindo o Projeto lógico combinacional resultaria em uma tabela de verdade de mais de 4 billões de linhas.",
+          "Um somador implementado seguindo o Projeto lógico combinacional gera valores espurios."
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C3-1-Q4",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Em referência aos Deslocadores, selecione a alternativa incorreta",
+        "options": [
+          "Não é possível implementar deslocadores usando apenas logica combinacional.",
+          "Pode ser usado para multiplicar por 4.",
+          "Pode ser usado para dividir por 2.",
+          "São úteis para transmitir dados serialmente."
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-1-Q5",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Selecione a frase correta;",
+        "options": [
+          "Um comparador de identidade de 4 bits tem maior tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
+          "Não é possivel determinar que um comparador de identidade de 4 bits tenha maior ou menor tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
+          "Um comparador de identidade de 4 bits tem igual tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte.",
+          "Um comparador de identidade de 4 bits tem menor tempo de atraso que um comparador de magnitude de 4 bits que usa propagação de bit de transporte."
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C3-1-Q6",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Selecione a opção incorreta;",
+        "options": [
+          "Um temporizador é um tipo especial de contador que mede tempo.",
+          "Para medir o paso de 1,5 segundos usando um contador decrecente que tem uma frequência de relogio de 1kHz, deve-se carregar 10111011100.",
+          "Um temporizador pode ser implementado a partir de um contador decrescente.",
+          "Um temporizador pode ser implementado a partir de um contador crescente.",
+          "Para medir o paso de 1 segundo usando um contador decrecente que tem uma frequência de relogio de 10kHz, deve-se carregar 10011100001111."
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-1-Q7",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Um multiplicador tipo estilo array de _____ pode ser implementado usando ___ portas AND e ___ somadores.",
+        "options": [
+          "5x5 - 25 - 4",
+          "4x4 - 16 - 4",
+          "4x4 - 8 - 3",
+          "5x5 - 25 - 5"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-1-Q8",
+        "form": "C3 1",
+        "type": "single",
+        "text": "O processo de impressão a tinta utiliza o espaço de cores _____ e que a mistura das tintas vermelha, verde e azul produz o _____.",
+        "options": [
+          "CMY - branco",
+          "CMY - preto",
+          "RGB - branco",
+          "RGB - preto"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-1-Q9",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Uma unidades lógico-aritmética é um componenete de bloco operacional que possui apenas entradas e saídas de dados;",
+        "options": [
+          "Falso",
+          "Verdadeiro"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-1-Q10",
+        "form": "C3 1",
+        "type": "single",
+        "text": "Nos bancos de registradores, a ramificação de um fio, que somente pode ser feita um certo número de vezes antes de que as correntes nos fios das ramificações sejam pequenas demais para poder controlar eficientemente os transistores, é conhecida como;",
+        "options": [
+          "Banco de registradores de porta múltipla",
+          "Buffer",
+          "Fanout",
+          "Driver"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C3-2-Q1",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Num circuito somador, o caminho mais longo a través do circuito é conhecido como",
+        "options": [
+          "Caminho crítico",
+          "Vai um",
+          "Propagação",
+          "Carry out"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-2-Q2",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Um somador com propagação de “vai um” de 16 bits terá um atraso de",
+        "options": [
+          "8 atrasos de porta",
+          "32 atrasos de porta",
+          "16 atrasos de porta",
+          "64 atrasos de porta"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-2-Q3",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Para um somador de 16 bits, construído com somadores rápidos de quatro bits (cerca de 100 portas), o atraso será de ____ atrasos de porta e o tamanho será em torno de _____ portas.",
+        "options": [
+          "8 - 400",
+          "8 - 1600",
+          "16 - 1600",
+          "16 - 400"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-2-Q4",
+        "form": "C3 2",
+        "type": "single",
+        "text": "O conceito de lookahead é utilizado em",
+        "options": [
+          "Somador com propagação",
+          "Circuitos chocantemente grandes",
+          "Somador com lógica de dois níveis",
+          "Somador com antecipação de transporte"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C3-2-Q5",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Pode-se usar o termo \"Somador hierárquico\" para denominar um",
+        "options": [
+          "Somador com antecipação de transporte de multiplos níveis",
+          "Somador com lógica de dois níveis",
+          "Somador com propagação",
+          "Somador com seleção de transporte"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-2-Q6",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Multiplexadores são utilizados em",
+        "options": [
+          "Somadores com seleção de transporte",
+          "Somadores hierárquico",
+          "Somadores com lógica de dois níveis",
+          "Somadores com propagação"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C3-2-Q7",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Selecione a sequencia que vai do menor ao maior atraso",
+        "options": [
+          "Propagação do bit de transporte - Seleção de bit de transporte - Antecipação de transporte em múltiplos níveis - Antecipação de transporte - Lógica de dois níveis",
+          "Lógica de dois níveis - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Seleção de bit de transporte - Propagação do bit de transporte",
+          "Lógica de dois níveis - Propagação do bit de transporte - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Seleção de bit de transporte",
+          "Seleção de bit de transporte - Lógica de dois níveis - Antecipação de transporte - Antecipação de transporte em múltiplos níveis - Propagação do bit de transporte"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C3-2-Q8",
+        "form": "C3 2",
+        "type": "single",
+        "text": "A idéia de um multiplicador _____ é ter a soma corrente dos(as) ____ parciais e computar um(a) ______ parcial de cada vez, ao invés de computá-los todos ao mesmo tempo, ______ em seguida.",
+        "options": [
+          "Estilo array - Produtos - Produto - Somando-os",
+          "Sequencial - Produtos - Soma - Somando-os",
+          "Estilo array - Somas - Produto - Multiplicando-os",
+          "Sequencial - Produtos - Produto - Somando-os"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C3-2-Q9",
+        "form": "C3 2",
+        "type": "single",
+        "text": "Em termos de desempenho, o multiplicador seqüencial requer 2 ciclos por bit, mais 1 ciclo para a inicialização. Assim, um multiplicador de __ bits irá requerer ___ ciclos.",
+        "options": [
+          "4 - 5",
+          "4 - 13",
+          "8 -17",
+          "8 - 24"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C3-2-Q10",
+        "form": "C3 2",
+        "type": "single",
+        "text": "No projeto interno de um multiplicador sequencial o registrador do(a) ____ é inicializado com 0;",
+        "options": [
+          "Multiplicador",
+          "Multiplicando",
+          "Soma corrente",
+          "Somador de 4 bits"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-1-Q1",
+        "form": "C4 1",
+        "type": "single",
+        "text": "A combinação de um bloco de controle com um bloco operacional é conhecida como",
+        "options": [
+          "Processador",
+          "Circuito digital",
+          "Sistema digital",
+          "Controlador"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-1-Q2",
+        "form": "C4 1",
+        "type": "single",
+        "text": "O circuito digital que implementa um algoritmo de computador - uma sequência de instruções que realiza que uma tarefa em particular, é denominado como",
+        "options": [
+          "Processador",
+          "Processador customizado",
+          "Processador programável",
+          "Componente digital de baixo nível"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C4-1-Q3",
+        "form": "C4 1",
+        "type": "single",
+        "text": "Selecione a alternativa que complete a seguinte frase: No projeto em nível de transferência entre registradores; o projetista ______ os registradores, ______ as possíveis transferências e operações a serem realizadas com os dados de entrada, de saída e dos registradores, e ______ o controle que especifica quando transferir e operar os dados",
+        "options": [
+          "Define – Especifica – Descreve",
+          "Descreve – Especifica – Define",
+          "Especifica – Define – Descreve",
+          "Especifica – Descreve – Define"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-1-Q4",
+        "form": "C4 1",
+        "type": "single",
+        "text": "Selecione a sequência de passos do método RTL;",
+        "options": [
+          "Obtenção de uma máquina de estados de alto nível – Criação de bloco operacional – Conexão do bloco operacional com o bloco de controle – Obtenção da FSM do bloco de controle",
+          "Obtenção da FSM do bloco de controle – Criação de bloco operacional – Conexão do bloco operacional com o bloco de controle – Obtenção de uma máquina de estados de alto nível",
+          "Obtenção de uma máquina de estados de alto nível –Conexão do bloco operacional com o bloco de controle – Criação de bloco operacional – Obtenção da FSM do bloco de controle",
+          "Obtenção da FSM do bloco de controle – Conexão do bloco operacional com o bloco de controle – Criação de bloco operacional – Obtenção de uma máquina de estados de alto nível"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-1-Q5",
+        "form": "C4 1",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta",
+        "options": [
+          "Em uma FSMD as ações e as condições podem envolver também equações e expressões aritméticas em geral, e não apenas booleanas",
+          "Uma máquina de estados de alto nível pode ser chamado de FSM com dados",
+          "Em uma FSMD as entradas e as saídas não podem envolver outros tipos de dados além de simples bits",
+          "Em uma FSMD registradores locais podem ser incluídos (com vários tipos de dados)"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-1-Q6",
+        "form": "C4 1",
+        "type": "multi",
+        "text": "Selecione os casos que podem ser abordados pelo método de projeto RTL;",
+        "options": [
+          "Filtro FIR",
+          "Compressão de vídeo",
+          "Medidor de distância baseado em raio laser",
+          "Interface de barramento"
+        ],
+        "correct": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "C4-1-Q7",
+        "form": "C4 1",
+        "type": "single",
+        "text": "Define uma sequência de ações linhas de dados, endereço e controle de modo a realizar uma transferência de dados nessas linhas de um processador a outro;",
+        "options": [
+          "Protocolo de barramento",
+          "Soma das diferenças absolutas",
+          "Soma absoluta das diferenças",
+          "Interface de barramento"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-1-Q8",
+        "form": "C4 1",
+        "type": "single",
+        "text": "Modo de se determinar a similaridade entre dois quadros digitalizados consecutivos em que para cada pixel do quadro 1, se computa a diferença entre esse pixel e o seu correspondente no quadro 2 e se soma os valores absolutos das diferenças de cada pixel.",
+        "options": [
+          "Soma absoluta das diferenças",
+          "Interface de barramento",
+          "Soma das diferenças absolutas",
+          "Protocolo de barramento"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-1-Q9",
+        "form": "C4 1",
+        "type": "single",
+        "text": "O atraso mais longo de um circuito, entre registradores ou entre uma entrada e um registrador é chamado de;",
+        "options": [
+          "Overclocking",
+          "Atraso de propagação",
+          "Delay",
+          "Caminho crítico"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-1-Q10",
+        "form": "C4 1",
+        "type": "single",
+        "text": "No _______________ ; a descrição de um sistema é feita inicialmente com uma _________ e depois é convertida em uma ___________.",
+        "options": [
+          "Projeto em nível comportamental– descrição RTL – linguagem de programação",
+          "Projeto em nível comportamental – Linguagem de programação – descrição RTL",
+          "Projeto RTL – descrição RTL – Linguagem de programação",
+          "Projeto RTL – linguagem de programação – descrição RTL"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C4-2-Q1",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória que utiliza um bloco de armazenamento de bit que pode ser constituído por dois inversores em laço;",
+        "options": [
+          "ROM",
+          "DRAM",
+          "Banco de registradores",
+          "SRAM"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-2-Q2",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória que precisa de um mecanismo denominado 'refresh' em cada bloco de armazenamento de bit, que é dado antes que os bits sejam completamente descarregados e consequentemente perdidos;",
+        "options": [
+          "DRAM",
+          "Banco de registradores",
+          "SRAM",
+          "ROM"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-2-Q3",
+        "form": "C4 2",
+        "type": "single",
+        "text": "O atraso entre o instante em que se coloca a entrada de controle de uma RAM (linha rw) em modo leitura e o momento em que a saída (data) torna-se estável é conhecido como;",
+        "options": [
+          "Tempo de hold",
+          "Atraso de propagação",
+          "Tempo de acesso",
+          "Tempo de setup"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-2-Q4",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta;",
+        "options": [
+          "Numa DRAM, o bit armazenado altera-se (descarrega-se) mesmo quando se está fornecendo energia e não se está escrevendo no bloco de armazenamento de bit",
+          "Comparada com uma SRAM, a DRAM pode necessitar de mais tempo para ser acessada",
+          "Para armazenar o mesmo número de bits, as vantagens de compacidade, de menos a mais, segue a seguinte ordem: Banco de registradores, SRAM e DRAM",
+          "Uma SRAM deve conter um controlador de memória interno para automaticamente dar ‘refresh’"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-2-Q5",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta;",
+        "options": [
+          "A ROM é não volátil já que o armazenamento de bit é preservado mesmo após o desligamento do fornecimento de energia, enquanto uma memória RAM é volátil",
+          "Em uma ROM, o volume ocupado pelo armazenamento de bit pode ser ainda menor do que o de uma RAM",
+          "Existem dispositivos de memorias RAM que podem preservar os seus conteúdos mesmo sem alimentação elétrica",
+          "A leitura numa ROM não pode ser mais rápida do que numa DRAM",
+          "A ROM não consome energia para manter os seus conteúdos"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-2-Q6",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória que tem os seus conteúdos programados no processo de fabricação do chip, conectando os 1s e 0s diretamente às células que devem armazenar o 0 e 1, respectivamente;",
+        "options": [
+          "Memoria flash",
+          "EPROM",
+          "ROM programável por máscara",
+          "OTP ROM"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-2-Q7",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória que usa um fusível (componente elétrico cuja ligação pode ser destruída passando-se uma corrente acima do normal) em cada célula, de forma que quando o fusível não está queimado aparece um '1' na linha de dados e um '0' no caso contrário;",
+        "options": [
+          "EPROM",
+          "EEPROM",
+          "ROM programável por máscara",
+          "Memoria flash",
+          "OTP ROM"
+        ],
+        "correct": [
+          4
+        ]
+      },
+      {
+        "id": "C4-2-Q8",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória que usa um tipo especial de transistor (que contém uma porta flutuante) em cada célula pode ser escrita usando elevadas tensões e pode ser pode ser restaurada ao ser exposto à luz UV;",
+        "options": [
+          "EEPROM",
+          "EPROM",
+          "Memoria flash",
+          "ROM programável por máscara",
+          "OTP ROM"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C4-2-Q9",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Tipo de memória na qual todas as palavras de um grande bloco de memória podem ser apagadas muito rapidamente (possivelmente ao mesmo tempo), ao invés de uma palavra por vez, utilizando métodos de programação baseadas em tensões elevadas;",
+        "options": [
+          "OTP ROM",
+          "EPROM",
+          "EEPROM",
+          "Memoria flash",
+          "ROM programável por máscara"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-2-Q10",
+        "form": "C4 2",
+        "type": "single",
+        "text": "Selecione a alternativa incorreta;",
+        "options": [
+          "Uma fila é uma lista que é escrita no fim, mas é lida no seu inicio",
+          "A condição Cheia numa fila pode ser detectada quando \"inicio=fim\"",
+          "Uma fila é conhecida como sendo do tipo FIFO",
+          "A condição Vazia em uma fila pode ser detectada quando \"inicio=fim\"",
+          "Numa fila, a leitura não remove o item lido da lista"
+        ],
+        "correct": [
+          4
+        ]
+      },
+      {
+        "id": "C4-3-Q1",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: \"Na técnica de pipelining, o(a) ______ significa dividir uma tarefa grande em estágios sucessivos, de tal modo que os dados passam por eles como as partes que se deslocam através de uma linha de montagem de uma fábrica. Cada estágio produz uma saída que será́ usada pelo estágio seguinte e todos os estágios trabalham concorrentemente (isto é, ao mesmo tempo). Desse modo, obtém-se um desempenho melhor do que se os dados da tarefa tivessem de ser completamente processados antes que novos dados pudessem começar a ser processados. \"",
+        "options": [
+          "Implementação de sistemas digitais",
+          "Obtenção de velocidade em circuitos digitais",
+          "Desenvolvimento de projetos menores",
+          "Uso de microprocessadores mais rápidos e de menor custo"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C4-3-Q2",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: “As computações feitas entre os __________ de pipeline são conhecidas como _______.”",
+        "options": [
+          "Registradores - Estágios",
+          "Tarefas - Estágios",
+          "Registradores - Tarefas",
+          "Estágios - Registradores"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-3-Q3",
+        "form": "C4 3",
+        "type": "multi",
+        "text": "Com respeito à figura a seguir, selecione a(s) opção(ões) correta(s);",
+        "options": [
+          "Possui 2 registradores de pipeline",
+          "Possui 5 registradores",
+          "Possui 2 estágios",
+          "Representa um bloco de controle"
+        ],
+        "correct": [
+          0,
+          2
+        ],
+        "image": "img/imagem4"
+      },
+      {
+        "id": "C4-3-Q4",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Com respeito à figura a seguir, selecione a(s) opção(ões) correta(s); <imagem5>",
+        "options": [
+          "O throughput na Figura A é menor que o throughput na Figura B",
+          "A latência na Figura A é menor que a latência na Figura B",
+          "O throughput na Figura A é maior que o throughput na Figura B",
+          "A latência na Figura A é maior que a latência na Figura B"
+        ],
+        "correct": [
+          0
+        ],
+        "image": "img/imagem5"
+      },
+      {
+        "id": "C4-3-Q5",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: “Em projeto digital, _________ significa dividir uma tarefa em diversas subpartes independentes e, então, executá-las ___________.”",
+        "options": [
+          "Concorrência – Sequencialmente",
+          "Pipeline – Simultaneamente",
+          "Concorrência – Simultaneamente",
+          "Pipeline – Sequencialmente"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C4-3-Q6",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Selecione a opção que complete a seguinte frase: “A escolha de um conjunto particular de unidades _________ para implementar um conjunto de operações é conhecida como __________.”",
+        "options": [
+          "Funcionais - Alocação de componentes",
+          "De controle - Alocação de componentes",
+          "Funcionais – Mapeamento de operadores",
+          "De controle - Mapeamento de operadores"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-3-Q7",
+        "form": "C4 3",
+        "type": "single",
+        "text": "Selecione a opção incorreta;",
+        "options": [
+          "Em conjunto, a alocação de componentes e o mapeamento de operadores são referidos algumas vezes como compartilhamento de recursos.",
+          "A alocação de muitos componentes fornece mais opções de mapeamento.",
+          "O mapeamento de um conjunto dado de operações a uma alocação de componentes em particular é conhecido “operator binding”.",
+          "As tarefas de alocação de componentes e mapeamento de operadores são independentes."
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C4-3-Q8",
+        "form": "C4 3",
+        "type": "single",
+        "text": "A conversão de uma computação, que é realizada concorrentemente em um estado, para ser realizada ocupando diversos estados é conhecida como paralelização de uma computação.",
+        "options": [
+          "Verdadeiro",
+          "Falso"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C4-3-Q9",
+        "form": "C4 3",
+        "type": "single",
+        "text": "A introdução ou combinação de estados e a atribuição de operações a esses estados é uma tarefa conhecida como Operator Scheduling.",
+        "options": [
+          "Verdadeiro",
+          "Falso"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C4-3-Q10",
+        "form": "C4 3",
+        "type": "single",
+        "text": "As tarefas de escalonamento, alocação e mapeamento são todas independentes entre si.",
+        "options": [
+          "Falso",
+          "Verdadeiro"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C5-1-Q1",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Selecione a alternativa que não corresponde a processadores programáveis;",
+        "options": [
+          "Podem executar programas aplicativos como editores de texto, planilhas eletrônicas, jogos de vídeo ou navegadores web",
+          "Circuitos digitais que executam uma única tarefa de processamento permitindo uma computação extremadamente rápida ou eficiente em termos de consumo energético",
+          "Circuitos digitais cuja tarefa de processamento é representada por um programa e ao invés de ser construída no próprio circuito, fica armazenada na memória",
+          "Foram planejados para serem usados em computadores de mesa (desktop) e/ou em sistemas embarcados como telefones celulares"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C5-1-Q2",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Com respeito aos processadores programáveis, selecione a sequência do processamento em um bloco operacional básico;",
+        "options": [
+          "Armazenamento - Transformação - Carga",
+          "Carga - Transformação - Armazenamento",
+          "Carga – Armazenamento - Transformação",
+          "Armazenamento – Carga - Transformação"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C5-1-Q3",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Elemento que guarda todos os dados que um processador programável poderá acessar, como dados de entrada e saída;",
+        "options": [
+          "Memória de dados",
+          "Bloco operacional",
+          "Banco de registradores",
+          "Memoria de instruções"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C5-1-Q4",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Em um dado ciclo de relógio, o bloco operacional pode executar;",
+        "options": [
+          "Operação de carga ou Operação de ALU ou Operação de armazenamento",
+          "Operação de carga e Operação de ALU e Operação de armazenamento"
+        ],
+        "correct": [
+          0
+        ]
+      },
+      {
+        "id": "C5-1-Q5",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Selecione os nomes correspondentes dos componentes 'a', 'b', 'c' e 'd' do bloco operacional mostrado na figura a seguir",
+        "options": [
+          "RF – MUX – Memória de dados – ALU",
+          "Memória de dados – ALU – RF – RF",
+          "MUX – Memória de dados –RF – ALU",
+          "Memória de dados – MUX – RF – ALU"
+        ],
+        "correct": [
+          3
+        ],
+        "image": "img/imagem6"
+      },
+      {
+        "id": "C5-1-Q6",
+        "form": "C5 1",
+        "type": "multi",
+        "text": "Selecione as operações válidas do bloco operacional da figura abaixo, usando um único ciclo de relógio;",
+        "options": [
+          "Copiar dados de uma posição de memória, colocando-os em uma posição do RF",
+          "Ler dados de duas posições de uma memória de dados, colocando em duas posições de um RF",
+          "Copiar dados de uma posição de um RF, colocando-os em outra posição do RF",
+          "Subtrair os dados de uma posição de um RF de uma posição de uma memória de dados, armazenando o resultado em uma posição do RF",
+          "Somar dados de duas posições de uma memória de dados e armazenar o resultado em uma posição de um RF"
+        ],
+        "correct": [
+          0,
+          2
+        ],
+        "image": "img/imagem6"
+      },
+      {
+        "id": "C5-1-Q7",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Selecione a alternativa que completa a seguinte frase: A descrição das operações que executa um bloco operacional é conhecido(a) como _______; uma coleção destas descrições é conhecido(a) como ________ o(a) qual fica armazenado em uma __________;",
+        "options": [
+          "Programa – Instrução –Memória de dados",
+          "Programa – Instrução –Memória de instruções",
+          "Instrução – Programa – Memória de programa",
+          "Instrução – Programa – Memória de dados"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C5-1-Q8",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Selecione a sequência de estágios que realiza o bloco de controle a fim de executar uma instrução;",
+        "options": [
+          "Execução – Busca – Decodificação",
+          "Decodificação – Busca - Execução",
+          "Busca – Decodificação – Execução",
+          "Busca – Execução - Decodificação"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C5-1-Q9",
+        "form": "C5 1",
+        "type": "single",
+        "text": "A unidade de controle armazena uma instrução buscada em um registrador local que é conhecido como ____. O contador crescente usado para avançar de uma instrução a um outra instrução de um programa é conhecido como ____ .",
+        "options": [
+          "RF – PC",
+          "PC – RF",
+          "IR – PC",
+          "PC – IR"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C5-1-Q10",
+        "form": "C5 1",
+        "type": "single",
+        "text": "Com respeito aos processadores programáveis, as operações que podem ser de três tipos possiveis (Carregar, Transformar e Armazenar) são realizados pelo(a);",
+        "options": [
+          "Unidade de controle",
+          "Bloco operacional",
+          "ALU",
+          "Memória"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C5-2-Q1",
+        "form": "C5 2",
+        "type": "multi",
+        "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, na instrução “0000 0000 00000000” que especifica uma movimentação de dados desde a posição 0 da memória de dados, ou D[0], até́ a posição 0 do banco de registradores, ou RF[0]; os primeiros quatro bits são conhecidos como ...",
+        "options": [
+          "Código de operação da instrução",
+          "Operandos",
+          "Instrução",
+          "Op- code"
+        ],
+        "correct": [
+          0,
+          3
+        ]
+      },
+      {
+        "id": "C5-2-Q2",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, na instrução “0000 0000 00000000” que especifica uma movimentação de dados desde a posição 0 da memória de dados, ou D[0], até́ a posição 0 do banco de registradores, ou RF[0]; os 12 últimos bits representam ...",
+        "options": [
+          "O código de operação da instrução",
+          "O op- code",
+          "Uma instrução",
+          "Os operandos"
+        ],
+        "correct": [
+          3
+        ]
+      },
+      {
+        "id": "C5-2-Q3",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, o programa a seguir computa ...",
+        "options": [
+          "D1 = D2 + D9",
+          "D1 = D0 + D9",
+          "D9 = D0 + D2",
+          "D9 = D0 + D1"
+        ],
+        "correct": [
+          1
+        ],
+        "image": "img/imagem7"
+      },
+      {
+        "id": "C5-2-Q4",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Selecione a alternativa que completa a seguinte frase: “Em uma memória de __________, as instruções de um programa existem como 0s e 1s; e um programa representado por 0s e 1s é conhecido como código __________.”",
+        "options": [
+          "Dados - Assembly",
+          "Dados - De máquina",
+          "Instruções - De máquina",
+          "Instruções - Assembly"
+        ],
+        "correct": [
+          2
+        ]
+      },
+      {
+        "id": "C5-2-Q5",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Selecione a alternativa que completa a seguinte frase: “O programa escrito com mnemônicos é conhecido como _____ e a ferramenta que traduz os mnemônicos para 1s e 0s é conhecido como __________.”",
+        "options": [
+          "Código de Máquina – Programa Assembler",
+          "Código Assembly – Programa Assembler",
+          "Código Assembly – Código de Máquina",
+          "Código de Máquina - Código Assembly"
+        ],
+        "correct": [
+          1
+        ]
+      },
+      {
+        "id": "C5-2-Q6",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Com respeito ao processador de três instruções descrito na Seção 8.3, o programa a seguir computa ... <imagem7>",
+        "options": [
+          "D9 = D0 + D1",
+          "D1 = D0 + D9",
+          "D1 = D2 + D9",
+          "D9 = D0 + D2"
+        ],
+        "correct": [
+          1
+        ],
+        "image": "img/imagem7"
+      },
+      {
+        "id": "C5-2-Q7",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Na figura a seguir, os rótulos (a), (b) e (c) representam, respectivamente; <imagem9>",
+        "options": [
+          "Registro de instruções - Contador de programa - Unidade de controle",
+          "Contador de programa – Registro de instruções - Bloco de controle",
+          "Contador de programa – Registro de instruções - Unidade de controle",
+          "Registro de instruções - Contador de programa - Bloco de controle"
+        ],
+        "correct": [
+          1
+        ],
+        "image": "img/imagem9"
+      },
+      {
+        "id": "C5-2-Q8",
+        "form": "C5 2",
+        "type": "single",
+        "text": "Na figura a seguir, a memória de dados possui ____; enquanto o banco de registradores possui _________. <imagem10>",
+        "options": [
+          "Entrada e saída de dados separadas – Uma entrada de dados",
+          "Entrada/Saída de dados bidirecional - Uma entrada de dados",
+          "Entrada/Saída de dados bidirecional - Duas saídas de dados",
+          "Entrada e saída de dados separadas – Duas saídas de dados"
+        ],
+        "correct": [
+          3
+        ],
+        "image": "img/imagem10"
+      },
+      {
+        "id": "C5-2-Q9",
+        "form": "C5 2",
+        "type": "single",
+        "text": "No processador programável de três instruções descrito na Seção 8.3, o estado mostrado na figura a seguir corresponde a (caiu na prova). <imagem11>",
+        "options": [
+          "O estado “Inicio” da FSM",
+          "O estado “Inicio” da máquina de estados de alto nível",
+          "O estado “Busca” da máquina de estados de alto nível",
+          "O estado “Busca” da FSM"
+        ],
+        "correct": [
+          2
+        ],
+        "image": "img/imagem11"
+      },
+      {
+        "id": "C5-2-Q10",
+        "form": "C5 2",
+        "type": "single",
+        "text": "No processador programável de três instruções descrito na Seção 8.3, os estados de execução são ...",
+        "options": [
+          "Carregar, Armazenar e Somar",
+          "Decodificar, Carregar, Armazenar e Somar",
+          "Buscar, Decodificar, Carregar, Armazenar e Somar",
+          "Carregar e Armazenar"
+        ],
+        "correct": [
+          0
+        ]
+      }
+    ]
 
-        // ====== 3) Estado do app ======
-        let questions = [];
-        let current = 0;
-        let hits = 0, misses = 0;
-        let locked = false;
+    function init() {
+      hits = 0; misses = 0; current = 0; locked = false;
+      // normaliza 'type' e embaralha perguntas
+      const normalized = rawQuestions.map(q => ({ ...q, type: normalizeType(q) }));
+      questions = shuffle(normalized);
+      $('#hits').textContent = hits;
+      $('#misses').textContent = misses;
+      $('#feedback').textContent = '';
+      $('#next').disabled = true;
+      updateProgress();
+      render();
+    }
 
-        function init() {
-            hits = 0; misses = 0; current = 0; locked = false;
-            // Embaralha perguntas e (depois, ao renderizar) também opções
-            questions = shuffle(quizData);
-            $('#hits').textContent = hits;
-            $('#misses').textContent = misses;
-            $('#feedback').textContent = '';
-            $('#next').disabled = true;
-            render();
-            updateProgress();
-        }
+    function updateProgress() {
+      $('#progress').textContent = `Pergunta ${Math.min(current + 1, questions.length)}/${questions.length || 0}`;
+    }
 
-        function updateProgress() {
-            $('#progress').textContent = `Pergunta ${current + 1}/${questions.length}`;
-        }
+    function render() {
+      const q = questions[current];
+      if (!q) return;
+      $('#origin').textContent = `Origem: ${q.form || '—'}`;
+      $('#question').textContent = q.text || '—';
+      $('#qtype').textContent = `Tipo: ${q.type === 'multiple' ? 'Múltipla escolha' : 'Única escolha'}`;
 
-        function render() {
-            const q = questions[current];
-            $('#origin').textContent = `Origem: ${q.form}`;
-            $('#question').textContent = q.text;
-            $('#qtype').textContent = `Tipo: ${q.type === 'multiple' ? 'Múltipla escolha' : 'Única escolha'}`;
+      // Imagem (se houver) — tenta sem e com extensões comuns
+      const imgEl = $('#qimage');
+      if (q.image) {
+        const candidates = [q.image, `${q.image}.png`, `${q.image}.jpg`, `${q.image}.jpeg`, `${q.image}.webp`];
+        let i = 0;
+        imgEl.onload = () => { imgEl.style.display = 'block'; };
+        imgEl.onerror = () => {
+          i += 1;
+          if (i < candidates.length) {
+            imgEl.src = candidates[i];
+          } else {
+            imgEl.style.display = 'none';
+            imgEl.removeAttribute('src');
+          }
+        };
+        imgEl.alt = 'Imagem da questão';
+        imgEl.src = candidates[i];
+      } else {
+        imgEl.removeAttribute('src');
+        imgEl.style.display = 'none';
+      }
 
-            const optionsWrap = $('#options');
-            optionsWrap.innerHTML = '';
-            // cria pares (texto, correto) e embaralha
-            const opts = q.options.map((t, idx) => ({ text: t, correct: q.correct.includes(idx) }));
-            const shuffled = shuffle(opts);
-            const inputType = q.type === 'multiple' ? 'checkbox' : 'radio';
 
-            shuffled.forEach((opt, idx) => {
-                const row = document.createElement('div');
-                row.className = 'opt';
-                row.dataset.correct = opt.correct ? 'true' : 'false';
+      const optionsWrap = $('#options');
+      optionsWrap.innerHTML = '';
+      const opts = (q.options || []).map((t, idx) => ({ text: t, correct: (q.correct || []).includes(idx) }));
+      const shuffled = shuffle(opts);
+      const inputType = q.type === 'multiple' ? 'checkbox' : 'radio';
 
-                const input = document.createElement('input');
-                input.type = inputType;
-                input.name = 'opt';
-                input.value = String(idx);
-                input.ariaLabel = opt.text;
+      shuffled.forEach((opt, idx) => {
+        const row = document.createElement('div');
+        row.className = 'opt';
+        row.dataset.correct = opt.correct ? 'true' : 'false';
 
-                const label = document.createElement('label');
-                label.textContent = opt.text;
-                label.addEventListener('click', () => { input.checked = !input.checked; });
+        const input = document.createElement('input');
+        input.type = inputType;
+        input.name = 'opt';
+        input.value = String(idx);
+        input.setAttribute('aria-label', opt.text);
 
-                const btnSel = document.createElement('button');
-                btnSel.className = 'sel';
-                btnSel.type = 'button';
-                btnSel.textContent = 'Selecionar';
-                btnSel.addEventListener('click', () => { input.checked = !input.checked; });
+        const label = document.createElement('label');
+        label.textContent = opt.text;
+        label.addEventListener('click', () => { input.checked = !input.checked; });
 
-                row.appendChild(input);
-                row.appendChild(label);
-                row.appendChild(btnSel);
+        const btnSel = document.createElement('button');
+        btnSel.className = 'sel';
+        btnSel.type = 'button';
+        btnSel.textContent = 'Selecionar';
+        btnSel.addEventListener('click', () => { input.checked = !input.checked; });
 
-                // clique na linha tmb seleciona
-                row.addEventListener('click', (e) => {
-                    if (e.target === input || e.target === btnSel || e.target === label) return;
-                    input.checked = !input.checked;
-                });
+        row.appendChild(input);
+        row.appendChild(label);
+        row.appendChild(btnSel);
 
-                optionsWrap.appendChild(row);
-            });
+        row.addEventListener('click', (e) => {
+          if (e.target === input || e.target === btnSel || e.target === label) return;
+          input.checked = !input.checked;
+        });
 
-            locked = false;
-            $('#feedback').textContent = '';
-            $('#confirm').disabled = false;
-            $('#next').disabled = true;
-        }
+        optionsWrap.appendChild(row);
+      });
 
-        function getSelection() {
-            const picked = [];
-            $$('#options .opt').forEach((row, idx) => {
-                const input = row.querySelector('input');
-                if (input && input.checked) picked.push(idx);
-            });
-            return picked;
-        }
+      locked = false;
+      $('#feedback').textContent = '';
+      $('#confirm').disabled = false;
+      $('#next').disabled = true;
+    }
 
-        function confirmAnswer() {
-            if (locked) return;
+    function getSelection() {
+      const picked = [];
+      $$('#options .opt').forEach((row, idx) => {
+        const input = row.querySelector('input');
+        if (input && input.checked) picked.push(idx);
+      });
+      return picked;
+    }
 
-            const pickedIdxs = getSelection();
-            const rows = $$('#options .opt');
-            if (rows.length === 0) return;
+    function confirmAnswer() {
+      if (locked) return;
 
-            const q = questions[current];
-            if (q.type === 'single' && pickedIdxs.length !== 1) {
-                $('#feedback').textContent = 'Selecione exatamente 1 opção.';
-                $('#feedback').className = 'feedback bad';
-                return;
-            }
-            if (q.type === 'multiple' && pickedIdxs.length === 0) {
-                $('#feedback').textContent = 'Selecione pelo menos 1 opção.';
-                $('#feedback').className = 'feedback bad';
-                return;
-            }
+      const pickedIdxs = getSelection();
+      const rows = $$('#options .opt');
+      if (rows.length === 0) return;
 
-            // Marca corretas/erradas visualmente
-            let ok = true;
-            rows.forEach((row, idx) => {
-                const isCorrect = row.dataset.correct === 'true';
-                const isPicked = pickedIdxs.includes(idx);
-                if (isCorrect) row.classList.add('correct');
-                if (isPicked && !isCorrect) row.classList.add('wrong');
-            });
+      const q = questions[current];
+      if (q.type === 'single' && pickedIdxs.length !== 1) {
+        $('#feedback').textContent = 'Selecione exatamente 1 opção.';
+        $('#feedback').className = 'feedback bad';
+        return;
+      }
+      if (q.type === 'multiple' && pickedIdxs.length === 0) {
+        $('#feedback').textContent = 'Selecione pelo menos 1 opção.';
+        $('#feedback').className = 'feedback bad';
+        return;
+      }
 
-            // Verifica igualdade de conjuntos (para múltipla)
-            const truth = rows.map((r, i) => r.dataset.correct === 'true' ? i : null).filter(i => i !== null);
-            if (pickedIdxs.length !== truth.length || pickedIdxs.some(i => !truth.includes(i))) ok = false;
+      let ok = true;
+      rows.forEach((row, idx) => {
+        const isCorrect = row.dataset.correct === 'true';
+        const isPicked = pickedIdxs.includes(idx);
+        if (isCorrect) row.classList.add('correct');
+        if (isPicked && !isCorrect) row.classList.add('wrong');
+      });
 
-            if (ok) {
-                hits++; $('#hits').textContent = hits;
-                $('#feedback').textContent = '✔️ Acertou!';
-                $('#feedback').className = 'feedback good';
-            } else {
-                misses++; $('#misses').textContent = misses;
-                $('#feedback').textContent = '❌ Errou.';
-                $('#feedback').className = 'feedback bad';
-            }
+      const truth = rows.map((r, i) => r.dataset.correct === 'true' ? i : null).filter(i => i !== null);
+      if (pickedIdxs.length !== truth.length || pickedIdxs.some(i => !truth.includes(i))) ok = false;
 
-            locked = true;
-            $('#confirm').disabled = true;
-            $('#next').disabled = false;
-        }
+      if (ok) {
+        hits++; $('#hits').textContent = hits;
+        $('#feedback').textContent = '✔️ Acertou!';
+        $('#feedback').className = 'feedback good';
+      } else {
+        misses++; $('#misses').textContent = misses;
+        $('#feedback').textContent = '❌ Errou.';
+        $('#feedback').className = 'feedback bad';
+      }
 
-        function nextQuestion() {
-            if (!locked) return;
-            current++;
-            if (current >= questions.length) {
-                $('#question').textContent = `Fim! 🎉 Resultado: ${hits} acerto(s), ${misses} erro(s).`;
-                $('#origin').textContent = 'Origem: —';
-                $('#qtype').textContent = 'Tipo: —';
-                $('#options').innerHTML = '';
-                $('#feedback').textContent = 'Toque em “Reiniciar” para embaralhar e começar de novo.';
-                $('#next').disabled = true;
-                $('#confirm').disabled = true;
-                $('#progress').textContent = `Concluído (${questions.length} questões)`;
-                return;
-            }
-            updateProgress();
-            render();
-        }
+      locked = true;
+      $('#confirm').disabled = true;
+      $('#next').disabled = false;
+    }
 
-        // Events
-        $('#confirm').addEventListener('click', confirmAnswer);
-        $('#next').addEventListener('click', nextQuestion);
-        $('#restart').addEventListener('click', init);
+    function nextQuestion() {
+      if (!locked) return;
+      current++;
+      if (current >= questions.length) {
+        $('#question').textContent = `Fim! 🎉 Resultado: ${hits} acerto(s), ${misses} erro(s).`;
+        $('#origin').textContent = 'Origem: —';
+        $('#qtype').textContent = 'Tipo: —';
+        $('#options').innerHTML = '';
+        $('#feedback').textContent = 'Toque em “Reiniciar” para embaralhar e começar de novo.';
+        $('#next').disabled = true;
+        $('#confirm').disabled = true;
+        $('#progress').textContent = `Concluído (${questions.length} questões)`;
+        return;
+      }
+      updateProgress();
+      render();
+    }
 
-        // Start
-        init();
-    </script>
+    $('#confirm').addEventListener('click', confirmAnswer);
+    $('#next').addEventListener('click', nextQuestion);
+    $('#restart').addEventListener('click', init);
+
+    // Inicializa carregando o JSON
+    loadQuestions();
+  </script>
 </body>
 
 </html>
